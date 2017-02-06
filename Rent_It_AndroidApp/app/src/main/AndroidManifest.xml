@@ -12,25 +12,30 @@
         android:theme="@style/MyMaterialTheme">
         <activity android:name=".SignInActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity">
+        <activity android:name=".testing.MainActivity"></activity>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".testing.TestActivity">
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
         </activity>
         <activity
-            android:name=".SignUpActivity">
-        </activity>
-        <activity
-            android:name=".ResetPasswordActivity">
-        </activity>
-        <activity
-            android:name=".BaseActivity">
-        </activity>
-        <activity
-            android:name=".TestActivity">
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/MyMaterialTheme">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
     </application>
 

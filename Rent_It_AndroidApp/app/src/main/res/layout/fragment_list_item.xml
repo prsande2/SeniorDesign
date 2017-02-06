@@ -1,0 +1,225 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    tools:context="com.rent_it_app.rent_it.views.ListItemFragment">
+
+
+   <!-- <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--Title-->
+        <TextView
+            android:id="@+id/label1"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_title"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label1"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+
+        <!--Description-->
+        <TextView
+            android:id="@+id/label2"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_description"
+            android:layout_below="@+id/textbox1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label2"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Condition-->
+        <TextView
+            android:id="@+id/label3"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_condition"
+            android:layout_below="@+id/textbox2"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label3"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Location-->
+        <TextView
+            android:id="@+id/label4"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_location"
+            android:layout_below="@+id/textbox3"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label4"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Category-->
+        <TextView
+            android:id="@+id/label5"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_category"
+            android:layout_below="@+id/textbox4"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label5"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Tags-->
+        <TextView
+            android:id="@+id/label6"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_tags"
+            android:layout_below="@+id/textbox5"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label6"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Value-->
+        <TextView
+            android:id="@+id/label7"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_value"
+            android:layout_below="@+id/textbox6"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label7"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Daily Rate-->
+        <TextView
+            android:id="@+id/label8"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_rate"
+            android:layout_below="@+id/textbox7"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label8"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Image-->
+        <TextView
+            android:id="@+id/label9"
+            android:textColor="#FFA500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_image"
+            android:layout_below="@+id/textbox8"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/textbox9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label9"
+            android:background="@drawable/edittextbackground"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+      </LinearLayout>
+    </ScrollView>
+    <!--</RelativeLayout>-->
+</FrameLayout>

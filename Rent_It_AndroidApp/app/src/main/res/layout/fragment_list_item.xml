@@ -5,13 +5,7 @@
     android:background="@color/windowBackground"
     tools:context="com.rent_it_app.rent_it.views.ListItemFragment">
 
-
-   <!-- <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -24,42 +18,43 @@
         <!--Title-->
         <TextView
             android:id="@+id/label1"
-            android:textColor="#FFA500"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_title"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
+
         <EditText
-            android:id="@+id/textbox1"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label1"
-            android:background="@drawable/edittextbackground"
+            android:background="@drawable/edittext_bg"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:padding="5dp"/>
 
-
         <!--Description-->
         <TextView
             android:id="@+id/label2"
-            android:textColor="#FFA500"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_description"
-            android:layout_below="@+id/textbox1"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
         <EditText
-            android:id="@+id/textbox2"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label2"
-            android:background="@drawable/edittextbackground"
+            android:background="@drawable/edittext_bg"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:lines="8"
+            android:scrollbars="vertical"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -68,42 +63,63 @@
         <!--Condition-->
         <TextView
             android:id="@+id/label3"
-            android:textColor="#FFA500"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_condition"
-            android:layout_below="@+id/textbox2"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
         <EditText
-            android:id="@+id/textbox3"
+            android:id="@+id/condition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label3"
-            android:background="@drawable/edittextbackground"
+            android:background="@drawable/edittext_bg"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:lines="3"
+            android:scrollbars="vertical"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:padding="5dp"/>
 
-        <!--Location-->
+        <!--City-->
         <TextView
             android:id="@+id/label4"
-            android:textColor="#FFA500"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/item_location"
-            android:layout_below="@+id/textbox3"
+            android:text="@string/item_city"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
         <EditText
-            android:id="@+id/textbox4"
+            android:id="@+id/city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label4"
-            android:background="@drawable/edittextbackground"
+            android:background="@drawable/edittext_bg"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"/>
+
+        <!--Zipcode-->
+        <TextView
+            android:id="@+id/label5"
+            android:textColor="@color/colorLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/item_location"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/zipcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_bg"
+            android:inputType="numberSigned"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -111,113 +127,165 @@
 
         <!--Category-->
         <TextView
-            android:id="@+id/label5"
-            android:textColor="#FFA500"
+            android:id="@+id/label6"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_category"
-            android:layout_below="@+id/textbox4"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
-        <EditText
-            android:id="@+id/textbox5"
+        <Spinner
+            android:id="@+id/spinner1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label5"
-            android:background="@drawable/edittextbackground"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:padding="5dp"/>
+            android:prompt="@string/category_prompt"/>
+            <!--android:entries="@array/category_array"-->
+
 
         <!--Tags-->
         <TextView
-            android:id="@+id/label6"
-            android:textColor="#FFA500"
+            android:id="@+id/label7"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_tags"
-            android:layout_below="@+id/textbox5"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
         <EditText
-            android:id="@+id/textbox6"
+            android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label6"
-            android:background="@drawable/edittextbackground"
+            android:background="@drawable/edittext_bg"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:padding="5dp"/>
+
+        <!--<MultiAutoCompleteTextView
+            android:id="@+id/mac_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:completionThreshold="1"
+            />-->
 
         <!--Value-->
         <TextView
-            android:id="@+id/label7"
-            android:textColor="#FFA500"
+            android:id="@+id/label8"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_value"
-            android:layout_below="@+id/textbox6"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
-        <EditText
-            android:id="@+id/textbox7"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label7"
-            android:background="@drawable/edittextbackground"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="5dp"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/dollar1"
+                android:textColor="@color/colorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+            <EditText
+                android:id="@+id/value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:background="@drawable/edittext_bg"
+                android:gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"/>
+        </LinearLayout>
+
 
         <!--Daily Rate-->
         <TextView
-            android:id="@+id/label8"
-            android:textColor="#FFA500"
+            android:id="@+id/label9"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_rate"
-            android:layout_below="@+id/textbox7"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
-        <EditText
-            android:id="@+id/textbox8"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label8"
-            android:background="@drawable/edittextbackground"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="5dp"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/dollar2"
+                android:textColor="@color/colorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+            <EditText
+                android:id="@+id/rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:gravity="right"
+                android:background="@drawable/edittext_bg"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"/>
+        </LinearLayout>
 
         <!--Image-->
         <TextView
-            android:id="@+id/label9"
-            android:textColor="#FFA500"
+            android:id="@+id/label10"
+            android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/item_image"
-            android:layout_below="@+id/textbox8"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"/>
 
-        <EditText
-            android:id="@+id/textbox9"
+
+        <Button
+            android:id="@+id/image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:textColor="@color/colorLabel"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Select Photo" />
+
+        <ImageView
+            android:id="@+id/preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label9"
-            android:background="@drawable/edittextbackground"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:src="@drawable/preview"
             android:padding="5dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="List It!"
+            android:id="@+id/list_button"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorAccent"
+            android:layout_gravity="center_horizontal"/>
+            <!--android:onClick="listItem"-->
+
 
       </LinearLayout>
     </ScrollView>

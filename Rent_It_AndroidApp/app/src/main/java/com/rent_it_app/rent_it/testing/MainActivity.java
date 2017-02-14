@@ -1,105 +1,92 @@
 package com.rent_it_app.rent_it.testing;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.rent_it_app.rent_it.BaseActivity;
 import com.rent_it_app.rent_it.R;
-import com.rent_it_app.rent_it.SignInActivity;
-import com.rent_it_app.rent_it.User;
+import com.rent_it_app.rent_it.json_models.Item;
+import com.rent_it_app.rent_it.json_models.ItemEndpoint;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class MainActivity extends BaseActivity
-      {
-
-    private TextView myStatusText;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private Button mSignOutButton;
-
-    /*private Toolbar mToolbar;*/
+public class MainActivity extends BaseActivity {
 
 
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
+    Retrofit retrofit;
+    ItemEndpoint itemEndpoint;
+    TextView txtTitle, txtDescription, txtCondition, txtCategory, txtLocation;
+    TextView txtTags, txtValue, txtRate;
+    Gson gson;
 
-    private String userId;
-    private static final String TAG = "Main";
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myStatusText = (TextView)findViewById(R.id.greetingMessage);
-        mSignOutButton = (Button) findViewById(R.id.sign_out_button);
-        /*mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
+        gson = new Gson();
+        txtTitle = (TextView)findViewById(R.id.title);
+        txtDescription = (TextView)findViewById(R.id.description);
+        txtCondition = (TextView)findViewById(R.id.condition);
+        txtCategory = (TextView)findViewById(R.id.category);
+        txtLocation = (TextView)findViewById(R.id.city);
+        txtTags = (TextView)findViewById(R.id.tags);
+        txtValue = (TextView)findViewById(R.id.value);
+        txtRate = (TextView)findViewById(R.id.rate);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.REST_API_BASE_URL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        itemEndpoint = retrofit.create(ItemEndpoint.class);
 
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid().toString();
-        Log.e(TAG, "my user id is " + userId);
-
-
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        // get reference to 'users' node
-        mFirebaseDatabase = mFirebaseInstance.getReference("Users");
-        // User data change listener
-        mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+        Call<List<Item>> call = itemEndpoint.getItems();
+        call.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                // Check for null
-                if (user == null) {
-                    Log.e(TAG, "User data is null!");
-                    return;
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                int statusCode = response.code();
+                List<Item> items = response.body();
+                StringBuilder sb = new StringBuilder();
+                for (Item i: items){
+                    boolean first = true;
+                    for (String t: i.getTags()){
+                        if(first){
+                            sb.append(t);
+                            first = false;
+                        }
+                        else { sb.append(", " + t); }
+                    }
                 }
+                //tv1.setText(sb.toString());
+                Log.d("retrofit.call.enqueue", ""+statusCode);
 
-                myStatusText.setText("Hello " + user.displayname);
-                Log.e(TAG, "your display name is " + user.displayname);
+                txtTitle.setText(items.get(0).getTitle());
+                txtDescription.setText(items.get(0).getDescription());
+                txtCondition.setText(items.get(0).getCondition());
+                txtCategory.setText(items.get(0).getCategory());
+                txtLocation.setText(items.get(0).getCity());
+                txtTags.setText(sb.toString());
+                txtValue.setText("$ " + items.get(0).getValue());
+                txtRate.setText("$ " + items.get(0).getRate() + " /day");
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.e(TAG, "Failed to read user", error.toException());
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+                Log.d("retrofit.call.enq.fail", t.toString());
             }
         });
-
     }
-
-    public void logOut(View view) {
-        mAuth.signOut();
-        Toast.makeText(MainActivity.this, "Successfully signed out", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-        //if you want to pass parameter
-        //intent.putExtra("EXTRA_SESSION_ID", sessionId);
-        startActivity(intent);
-        /*Snackbar snackbar = Snackbar
-                .make(coordinatorLayout, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
-
-        snackbar.show();*/
-    }
-
 
 
 }

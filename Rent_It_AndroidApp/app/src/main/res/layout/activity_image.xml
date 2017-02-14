@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+    android:id="@+id/upload"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Upload File to S3"
+    android:onClick="setFileToUpload"/>
+
+    <Button
+    android:id="@+id/download"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Download File from S3"
+    android:layout_below="@+id/upload"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:onClick="setFileToDownload"/>
+
+    <ImageView
+        android:id="@+id/myImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="50dp"
+        android:minHeight="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        />
+</LinearLayout>

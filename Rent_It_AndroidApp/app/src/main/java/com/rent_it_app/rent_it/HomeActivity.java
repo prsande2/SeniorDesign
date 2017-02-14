@@ -1,6 +1,7 @@
 package com.rent_it_app.rent_it;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import android.content.Intent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.rent_it_app.rent_it.views.InventoryFragment;
 import com.rent_it_app.rent_it.views.ListItemFragment;
 
 /*import com.google.firebase.database.DataSnapshot;
@@ -45,6 +47,8 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("HOME");
+        //((TextView) findViewById(R.id.toolbar_title)).setText("Title!");
 
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +71,7 @@ public class HomeActivity extends AppCompatActivity
         //Added from Main Activity
 
         myStatusText = (TextView)findViewById(R.id.greetingMessage);
-        mSignOutButton = (Button) findViewById(R.id.sign_out_button);
+
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -140,31 +144,43 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = null;
+        Class fragmentClass = null;
 
         if (id == R.id.nav_search) {
-            // Handle the camera action
-        } else if (id == R.id.nav_list) {
-            ListItemFragment ListItemFragment = new ListItemFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.content_home,ListItemFragment).commit();
-
-        } else if (id == R.id.nav_trade) {
-
-        } else if (id == R.id.nav_rental) {
-
-        } else if (id == R.id.nav_inventory) {
-
-        } else if (id == R.id.nav_inbox) {
-
-        } else if (id == R.id.nav_account) {
-
-        } else if (id == R.id.nav_claim) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_logout) {
             mAuth.signOut();
             Toast.makeText(HomeActivity.this, "Successfully signed out", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(HomeActivity.this, SignInActivity.class);
+            Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
+        }else {
+
+            if (id == R.id.nav_list) {
+                fragmentClass = ListItemFragment.class;
+            } else if (id == R.id.nav_trade) {
+                //fragmentClass = ListItemFragment.class;
+            } else if (id == R.id.nav_rental) {
+                //fragmentClass = ListItemFragment.class;
+            } else if (id == R.id.nav_inventory) {
+                fragmentClass = InventoryFragment.class;
+            } else if (id == R.id.nav_inbox) {
+                //fragmentClass = ListItemFragment.class;
+            } else if (id == R.id.nav_account) {
+                //fragmentClass = ListItemFragment.class;
+            } else if (id == R.id.nav_claim) {
+                //fragmentClass = ListItemFragment.class;
+            }
+
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.content_home, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

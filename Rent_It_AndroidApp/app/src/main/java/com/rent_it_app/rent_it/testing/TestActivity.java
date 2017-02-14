@@ -24,8 +24,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TestActivity extends BaseActivity {
 
-
-    public static final String BASE_URL = "http://10.0.2.2:3000/";
     Retrofit retrofit;
     GenreEndpoint genreEndpoint;
     TextView tv1;
@@ -41,7 +39,7 @@ public class TestActivity extends BaseActivity {
         genreEditText = (EditText)findViewById(R.id.genre);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(getString(R.string.REST_API_BASE_URL))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -71,6 +69,11 @@ public class TestActivity extends BaseActivity {
 
     public void postGenre(View v)
     {
+        Genre genre = new Genre();
+        genre.setName("testname");
+        String testGenre = gson.toJson(genre);
+        Log.d("output of gson", testGenre);
+
         GenrePost g = new GenrePost();
         g.setName(genreEditText.getText().toString());
         Call<GenrePost> call = genreEndpoint.createUser(g);

@@ -118,7 +118,15 @@ public class SignInActivity extends BaseActivity {
 
 
                         if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            Exception e = task.getException();
+                            Log.d(TAG, "signInWithEmail:failed:exception:", task.getException());
+                            try{
+                                Log.d(TAG, "signInWithEmail:failed:exception:getCause:", e.getCause());
+                            }
+                            catch(Exception e1){
+                                Log.d(TAG, "signInWithEmail:failed:exception:getCause:failed", e1);
+                            }
+                            Log.d(TAG, "signInWithEmail:failed:exception:getMessage:" + e.getMessage());
                             Toast.makeText(SignInActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -165,8 +173,7 @@ public class SignInActivity extends BaseActivity {
         hideProgressDialog();
         if (user != null) {
             //if logged in
-
-            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
             startActivity(intent);
         }
     }

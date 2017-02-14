@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground"
+    tools:context="com.rent_it_app.rent_it.views.InventoryFragment">
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -19,14 +14,6 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-           <!--<TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="This will be my data"
-                android:id="@+id/textView1"
-                android:layout_gravity="center_horizontal" />-->
 
             <!--Title-->
             <TextView
@@ -44,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -65,7 +51,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -84,25 +69,23 @@
                 android:textColor="@color/colorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text=""
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
-            <!--City-->
+            <!--Location-->
             <TextView
                 android:id="@+id/label4"
                 android:textColor="@color/colorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/item_city"
+                android:text="@string/item_location"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
             <TextView
-                android:id="@+id/city"
+                android:id="@+id/location"
                 android:textColor="@color/colorLabel"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -125,7 +108,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -145,7 +127,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -165,7 +146,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -185,7 +165,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -213,9 +192,4 @@
         </LinearLayout>
     </ScrollView>
 
-
-
-    </LinearLayout>
-
-
-
+</FrameLayout>

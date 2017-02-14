@@ -6,6 +6,9 @@
     <color name="textColorPrimary">#fff</color>
     <color name="windowBackground">#fff</color>
     <color name="navigationBarColor">#000</color>
+    <color name="borderColor">#939393</color>
+    <color name="orange">#FFA500</color>
+    <color name="colorLabel">#747274</color>
 
     <!--<color name="grey_100">#F5F5F5</color>
     <color name="grey_300">#E0E0E0</color>-->

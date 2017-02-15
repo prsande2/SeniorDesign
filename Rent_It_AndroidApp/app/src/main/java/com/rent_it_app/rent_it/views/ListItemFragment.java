@@ -435,14 +435,14 @@ public class ListItemFragment extends Fragment {
         Log.d("PATH",""+ photo_destination);
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
 
-    public String getRealPathFromURI(Context inContext, Uri uri) {
+    private String getRealPathFromURI(Context inContext, Uri uri) {
         Cursor cursor = inContext.getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);

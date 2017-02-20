@@ -7,47 +7,63 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorLabel"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:id="@+id/messengerImageView"
-
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:src="@drawable/ic_account"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/messengerTextView"
+                        android:text="Mimi"
+                        android:layout_weight="3"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/timeTextView"
+                        android:text="13:55"
+                        android:gravity="right"
+                        android:paddingRight="20dp"
+                        android:layout_weight="1" />
+
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/messengerTextView"
-                android:text="Mimi"
-                android:layout_alignParentTop="true"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
                 android:id="@+id/messageTextView"
-                android:text="I am massage"
-                android:layout_below="@+id/messengerTextView"
-                />
+                android:ellipsize="none"
+                android:singleLine="false"
+                android:text="I am massage. I am massage. I am massage.
+                I am massage. I am massage. I am massage. I am massage.
+                I am massage. I am massage. I am massage. I am massage." />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/timeTextView"
-                android:text="13:55"
-                android:layout_gravity="right"/>
-        </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -48,6 +48,8 @@ import com.rent_it_app.rent_it.SignInActivity;
 import com.rent_it_app.rent_it.firebase.Config;
 import com.rent_it_app.rent_it.json_models.ChatMessage;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +76,7 @@ public class ChatActivity extends AppCompatActivity implements
     private static final String TAG = "MainActivity";
     public static final String MESSAGES_CHILD = "messages";
     private static final int REQUEST_INVITE = 1;
-    public static final int DEFAULT_MSG_LENGTH_LIMIT = 10;
+    public static final int DEFAULT_MSG_LENGTH_LIMIT = 1000;
     public static final String ANONYMOUS = "anonymous";
     private static final String MESSAGE_SENT_EVENT = "message_sent";
     private static final String MESSAGE_URL = "http://friendlychat.firebase.google.com/message/";
@@ -152,7 +154,7 @@ public class ChatActivity extends AppCompatActivity implements
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 viewHolder.messageTextView.setText(chatMessage.getText());
                 viewHolder.messengerTextView.setText(chatMessage.getName());
-                viewHolder.messengerTextView.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",chatMessage.getMessageTime()));
+                viewHolder.timeTextView.setText(chatMessage.getMessageTime());
                 if (chatMessage.getPhotoUrl() == null) {
                     viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
                             R.drawable.ic_account));
@@ -166,7 +168,7 @@ public class ChatActivity extends AppCompatActivity implements
                 //FirebaseAppIndex.getInstance().update(getMessageIndexable(chatMessage));
 
                 // log a view action on it
-                //FirebaseUserActions.getInstance().end(getMessageViewAction(chatMessage));
+                //FirebaseUserActions.getInstan ce().end(getMessageViewAction(chatMessage));
             }
         };
 
@@ -208,7 +210,7 @@ public class ChatActivity extends AppCompatActivity implements
         // Define default config values. Defaults are used when fetched config values are not
         // available. Eg: if an error occurred fetching values from the server.
         Map<String, Object> defaultConfigMap = new HashMap<>();
-        defaultConfigMap.put("friendly_msg_length", 10L);
+        defaultConfigMap.put("friendly_msg_length", 1000L);
 
         // Apply config settings and default values.
         mFirebaseRemoteConfig.setConfigSettings(firebaseRemoteConfigSettings);

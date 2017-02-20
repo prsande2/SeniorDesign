@@ -1,5 +1,7 @@
 package com.rent_it_app.rent_it.json_models;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,16 +14,19 @@ public class ChatMessage {
     private String text;
     private String name;
     private String photoUrl;
-    private long messageTime;
+    private String messageTime;
 
     public ChatMessage() {
     }
 
     public ChatMessage(String text, String name, String photoUrl) {
+
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
-        messageTime = new Date().getTime();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a,MMM dd");
+        this.messageTime = sdf.format(cal.getTime());
     }
 
     public String getId() {
@@ -56,11 +61,11 @@ public class ChatMessage {
         this.photoUrl = photoUrl;
     }
 
-    public long getMessageTime() {
+    public String getMessageTime() {
         return messageTime;
     }
 
-    public void setMessageTime(long messageTime) {
+    public void setMessageTime(String messageTime) {
         this.messageTime = messageTime;
     }
 }

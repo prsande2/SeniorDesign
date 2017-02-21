@@ -103,6 +103,7 @@ public class ChatActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        setContentView(R.layout.chat);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = ANONYMOUS;
@@ -245,8 +246,11 @@ public class ChatActivity extends AppCompatActivity implements
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChatMessage chatMessage = new ChatMessage(mMessageEditText.getText().toString(), mUsername,
-                        mPhotoUrl);
+                if (mMessageEditText.length() == 0)
+                    return;
+
+                ChatMessage chatMessage = new ChatMessage(mMessageEditText.getText().toString(), Calendar.getInstance().getTime(),
+                        mUsername, mFirebaseUser.getUid(),"my receiver",mPhotoUrl);
                 mFirebaseDatabaseReference.child(MESSAGES_CHILD).push().setValue(chatMessage);
                 mMessageEditText.setText("");
                 //mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);

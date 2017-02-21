@@ -13,17 +13,28 @@ public class ChatMessage {
     private String id;
     private String text;
     private String name;
+    private String sender;
+    private String receiver;
     private String photoUrl;
     private String messageTime;
+    private Date date;
+
+
+    /*public static final int STATUS_SENDING = 0;
+    public static final int STATUS_SENT = 1;
+    public static final int STATUS_FAILED = 2;*/
 
     public ChatMessage() {
     }
 
-    public ChatMessage(String text, String name, String photoUrl) {
+    public ChatMessage(String text, Date date, String name, String sender, String receiver, String photoUrl) {
 
         this.text = text;
         this.name = name;
+        this.sender = sender;
+        this.receiver = receiver;
         this.photoUrl = photoUrl;
+        this.date = date;
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("h:mm a,MMM dd");
         this.messageTime = sdf.format(cal.getTime());

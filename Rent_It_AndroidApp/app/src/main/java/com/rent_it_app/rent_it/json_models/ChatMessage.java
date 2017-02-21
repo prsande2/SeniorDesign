@@ -3,6 +3,7 @@ package com.rent_it_app.rent_it.json_models;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import com.rent_it_app.rent_it.views.ChatListFragment;
 
 /**
  * Created by Nagoya on 2/16/17.
@@ -11,7 +12,7 @@ import java.util.Date;
 public class ChatMessage {
 
     private String id;
-    private String text;
+    private String msg;
     private String name;
     private String sender;
     private String receiver;
@@ -19,25 +20,28 @@ public class ChatMessage {
     private String messageTime;
     private Date date;
 
+    /** The status. */
+    private int status = STATUS_SENT;
 
-    /*public static final int STATUS_SENDING = 0;
+
+    public static final int STATUS_SENDING = 0;
     public static final int STATUS_SENT = 1;
-    public static final int STATUS_FAILED = 2;*/
+    public static final int STATUS_FAILED = 2;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(String text, Date date, String name, String sender, String receiver, String photoUrl) {
+    public ChatMessage(String msg, Date date, String name, String sender, String receiver, String photoUrl) {
 
-        this.text = text;
+        this.msg = msg;
         this.name = name;
         this.sender = sender;
         this.receiver = receiver;
         this.photoUrl = photoUrl;
         this.date = date;
-        Calendar cal = Calendar.getInstance();
+        /*Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("h:mm a,MMM dd");
-        this.messageTime = sdf.format(cal.getTime());
+        this.messageTime = sdf.format(cal.getTime());*/
     }
 
     public String getId() {
@@ -48,12 +52,12 @@ public class ChatMessage {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public String getName() {
@@ -72,12 +76,55 @@ public class ChatMessage {
         this.photoUrl = photoUrl;
     }
 
-    public String getMessageTime() {
+    /*public String getMessageTime() {
         return messageTime;
     }
 
     public void setMessageTime(String messageTime) {
         this.messageTime = messageTime;
     }
+*/
+    public int getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(int status)
+    {
+        this.status = status;
+    }
+
+    public String getReceiver()
+    {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver)
+    {
+        this.receiver = receiver;
+    }
+
+    public String getSender()
+    {
+        return sender;
+    }
+
+    public void setSender(String sender)
+    {
+        this.sender = sender;
+    }
+
+    public boolean isSent()
+    {
+        return ChatListFragment.user.getId().contentEquals(sender);
+    }
+
+    public Date getDate() { return date;}
+
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
+
 }
 

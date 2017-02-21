@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,14 +47,13 @@ import com.rent_it_app.rent_it.SignInActivity;
 import com.rent_it_app.rent_it.firebase.Config;
 import com.rent_it_app.rent_it.json_models.ChatMessage;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ChatActivity extends AppCompatActivity implements
+public class MsgActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -153,14 +151,14 @@ public class ChatActivity extends AppCompatActivity implements
             @Override
             protected void populateViewHolder(MessageViewHolder viewHolder, ChatMessage chatMessage, int position) {
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                viewHolder.messageTextView.setText(chatMessage.getText());
+                //viewHolder.messageTextView.setText(chatMessage.getText());
                 viewHolder.messengerTextView.setText(chatMessage.getName());
-                viewHolder.timeTextView.setText(chatMessage.getMessageTime());
+                //viewHolder.timeTextView.setText(chatMessage.getMessageTime());
                 if (chatMessage.getPhotoUrl() == null) {
-                    viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(ChatActivity.this,
+                    viewHolder.messengerImageView.setImageDrawable(ContextCompat.getDrawable(MsgActivity.this,
                             R.drawable.ic_account));
                 } else {
-                    Glide.with(ChatActivity.this)
+                    Glide.with(MsgActivity.this)
                             .load(chatMessage.getPhotoUrl())
                             .into(viewHolder.messengerImageView);
                 }

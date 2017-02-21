@@ -43,7 +43,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.rent_it_app.rent_it.HomeActivity;
 import com.rent_it_app.rent_it.R;
-import com.rent_it_app.rent_it.Utility;
+import com.rent_it_app.rent_it.utils.Utility;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

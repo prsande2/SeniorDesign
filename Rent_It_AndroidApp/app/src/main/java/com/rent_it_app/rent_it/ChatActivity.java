@@ -233,7 +233,7 @@ public class ChatActivity extends BaseActivity{
         }
 
         /* (non-Javadoc)
-         * @see android.widget.Adapter#getItemId(int)
+         * @see android.widget.Adapter#getItem_id(int)
          */
         @Override
         public long getItemId(int arg0) {

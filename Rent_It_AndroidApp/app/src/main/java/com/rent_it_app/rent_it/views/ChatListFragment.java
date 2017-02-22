@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rent_it_app.rent_it.ChatActivity;
 import com.rent_it_app.rent_it.R;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.chatt.demo.custom.CustomActivity;
+import com.rent_it_app.rent_it.SignInActivity;
 import com.rent_it_app.rent_it.firebase.Config;
 import com.rent_it_app.rent_it.json_models.ChatUser;
 //import com.chatt.demo.utils.Const;
@@ -30,11 +32,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.rent_it_app.rent_it.testing.MsgActivity;
+import com.rent_it_app.rent_it.json_models.Conversation;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +46,7 @@ public class ChatListFragment extends Fragment {
 
     /** The Chat list. */
     private ArrayList<ChatUser> uList;
+    private ArrayList<Conversation>cList;
 
     /** The user. */
     public static ChatUser user;
@@ -96,39 +97,62 @@ public class ChatListFragment extends Fragment {
 
     private void loadChatList()
     {
-        final ProgressDialog dia = ProgressDialog.show(getActivity(), null,
-                "Loading...");
+        final ProgressDialog dia = ProgressDialog.show(getActivity(), null, "Loading...");
 
         // Pull the users list once no sync required.
-        mFirebaseDatabaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+        //mFirebaseDatabaseReference.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+        mFirebaseDatabaseReference.child("conversations").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {dia.dismiss();
-                long size  = dataSnapshot.getChildrenCount();
-                if(size == 0) {
-                    Toast.makeText(getActivity(), "No chat found", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                uList = new ArrayList<ChatUser>();
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ChatUser user = ds.getValue(ChatUser.class);
-                    Logger.getLogger(ChatListFragment.class.getName()).log(Level.ALL,user.getUsername());
-                    Log.d("Test","user.getId(): "+user.getId());
-                    Log.d("Test","user.getUsername(): "+user.getUsername());
-                    if(!user.getId().contentEquals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
-                        uList.add(user);
-                }
-                //ListView list = (ListView) view.findViewById(R.id.list);
-                list.setAdapter(new UserAdapter());
-                list.setOnItemClickListener(new OnItemClickListener() {
 
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0,
-                                            View arg1, int pos, long arg3)
-                    {
-                        startActivity(new Intent(getActivity(), ChatActivity.class)
-                                .putExtra(Config.EXTRA_DATA,  uList.get(pos)));
+                FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
+                if(myUser != null) {
+                    long size = dataSnapshot.getChildrenCount();
+                    if (size == 0) {
+                        Toast.makeText(getActivity(), "No chat found", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                });
+
+                    //uList = new ArrayList<ChatUser>();
+                    cList = new ArrayList<Conversation>();
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                        //ChatUser user = ds.getValue(ChatUser.class);
+                        Conversation conversation = ds.getValue(Conversation.class);
+
+                        //Logger.getLogger(ChatListFragment.class.getName()).log(Level.ALL,user.getUsername());
+                        Log.d("Test", "conversation.getOwner(): "+ conversation.getOwner());
+                        Log.d("Test", "conversation.getItem_name(): "+ conversation.getItem_name());
+
+                        /*if (!user.getId().contentEquals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                            uList.add(user);*/
+                        if (conversation.getOwner().contentEquals(myUser.getUid()) || conversation.getRenter()
+                                .contentEquals(myUser.getUid())) {
+                            cList.add(conversation);
+
+                            /*if (lastMsgDate == null || lastMsgDate.before(conversation.getDate()))
+                                lastMsgDate = conversation.getDate();*/
+                            Log.d("Test2", "conversation.getOwner(): "+ conversation.getOwner());
+                            Log.d("Test2", "conversation.getItem_name(): "+ conversation.getItem_name());
+                            //adp.notifyDataSetChanged();
+                        }
+                    }
+                    //ListView list = (ListView) view.findViewById(R.id.list);
+                    list.setAdapter(new UserAdapter());
+                    list.setOnItemClickListener(new OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0,
+                                                View arg1, int pos, long arg3) {
+                            startActivity(new Intent(getActivity(), ChatActivity.class)
+                                    .putExtra(Config.EXTRA_DATA, uList.get(pos)));
+                        }
+                    });
+
+                }else{
+                    startActivity(new Intent(getActivity(), SignInActivity.class));
+                }
             }
 
             @Override
@@ -149,22 +173,21 @@ public class ChatListFragment extends Fragment {
          * @see android.widget.Adapter#getCount()
          */
         @Override
-        public int getCount()
-        {
-            return uList.size();
-        }
+        //public int getCount() { return uList.size(); }
+        public int getCount() { return cList.size(); }
 
         /* (non-Javadoc)
          * @see android.widget.Adapter#getItem(int)
          */
         @Override
-        public ChatUser getItem(int arg0)
+        //public ChatUser getItem(int arg0){return uList.get(arg0);}
+        public Conversation getItem(int arg0)
         {
-            return uList.get(arg0);
+            return cList.get(arg0);
         }
 
         /* (non-Javadoc)
-         * @see android.widget.Adapter#getItemId(int)
+         * @see android.widget.Adapter#getItem_id(int)
          */
         @Override
         public long getItemId(int arg0)
@@ -181,9 +204,13 @@ public class ChatListFragment extends Fragment {
             if (v == null)
                 v = getActivity().getLayoutInflater().inflate(R.layout.chat_item, arg2, false);
 
-            ChatUser c = getItem(pos);
+            //ChatUser c = getItem(pos);
+            Conversation c = getItem(pos);
+
             TextView lbl = (TextView) v;
-            lbl.setText(c.getUsername());
+            //lbl.setText(c.getUsername());
+            lbl.setText(c.getItem_name());
+
             /*lbl.setCompoundDrawablesWithIntrinsicBounds(
                     c.isOnline() ? R.drawable.ic_online
                             : R.drawable.ic_offline, 0, R.drawable.arrow, 0);*/

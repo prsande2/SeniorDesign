@@ -316,7 +316,7 @@ public class MsgActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItem_id()) {
             case R.id.invite_menu:
                 sendInvitation();
                 return true;

@@ -17,7 +17,7 @@ public class ChatMessage {
     private String sender;
     private String receiver;
     private String photoUrl;
-    private String messageTime;
+    //private String messageTime;
     private Date date;
 
     /** The status. */

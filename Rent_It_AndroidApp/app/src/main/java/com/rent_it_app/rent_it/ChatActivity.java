@@ -47,7 +47,7 @@ public class ChatActivity extends BaseActivity {
     /**
      * The Conversation list.
      */
-    private ArrayList<ChatMessage> convList;
+    //private ArrayList<ChatMessage> convList;
     private ArrayList<Chat> msgList;
 
     /**
@@ -74,6 +74,8 @@ public class ChatActivity extends BaseActivity {
 
     private String rental_id;
 
+    private FirebaseUser myUser;
+
     /* (non-Javadoc)
      * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
      */
@@ -82,7 +84,11 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
 
-        convList = new ArrayList<ChatMessage>();
+        myConversation = (Conversation) getIntent().getSerializableExtra(Config.EXTRA_DATA);
+        rental_id = myConversation.getRental_id();
+
+        //convList = new ArrayList<Chat>();
+        msgList = (ArrayList) myConversation.getChat();
         ListView list = (ListView) findViewById(R.id.list);
         adp = new ChatAdapter();
         list.setAdapter(adp);
@@ -99,10 +105,9 @@ public class ChatActivity extends BaseActivity {
         //buddy = (ChatUser) getIntent().getSerializableExtra(Config.EXTRA_DATA);
 
 
-        myConversation = (Conversation) getIntent().getSerializableExtra(Config.EXTRA_DATA);
-        rental_id = myConversation.getRental_id();
 
-        FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        myUser = FirebaseAuth.getInstance().getCurrentUser();
         Log.d("Test","my uid: "+myUser.getUid());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -165,28 +170,38 @@ public class ChatActivity extends BaseActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
-            final ChatMessage conversation = new ChatMessage(s,
-                    Calendar.getInstance().getTime(), "Mimi",
-                    user.getUid(), buddy.getId(),
-                    "");
-            conversation.setStatus(ChatMessage.STATUS_SENDING);
-            convList.add(conversation);
-            final String key = FirebaseDatabase.getInstance()
+            //final ChatMessage conversation = new ChatMessage(s,
+            //        Calendar.getInstance().getTime(), "Mimi",
+            //        user.getUid(), buddy.getId(),
+            //        "");
+            final Chat c = new Chat(Calendar.getInstance().getTime(),
+                                    s,
+                                    buddyId,
+                                    user.getUid());
+            //c.setStatus(ChatMessage.STATUS_SENDING);
+            c.setStatus(Chat.STATUS_SENDING);
+            //convList.add(conversation);
+            msgList.add(c);
+            /*final String key = FirebaseDatabase.getInstance()
                     .getReference("messages")
-                    .push().getKey();
-            FirebaseDatabase.getInstance().getReference("messages").child(key)
-                    .setValue(conversation)
+                    .push().getKey();*/
+            /*final String key = FirebaseDatabase.getInstance()
+                    .getReference("conversations")
+                    .push().getKey();*/
+            //FirebaseDatabase.getInstance().getReference("messages").child(key)
+            FirebaseDatabase.getInstance().getReference("conversations").child(rental_id).child("chat")
+                    .setValue(msgList)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                @Override
                                                public void onComplete(@NonNull Task<Void> task) {
                                                    if (task.isSuccessful()) {
-                                                       convList.get(convList.indexOf(conversation)).setStatus(ChatMessage.STATUS_SENT);
+                                                       msgList.get(msgList.indexOf(c)).setStatus(Chat.STATUS_SENT);
                                                    } else {
-                                                       convList.get(convList.indexOf(conversation)).setStatus(ChatMessage.STATUS_FAILED);
+                                                       msgList.get(msgList.indexOf(c)).setStatus(Chat.STATUS_FAILED);
                                                    }
                                                    FirebaseDatabase.getInstance()
                                                            .getReference("messages")
-                                                           .child(key).setValue(convList.get(convList.indexOf(conversation)))
+                                                           .child(rental_id).child("chat").setValue(msgList.get(msgList.indexOf(c)))
                                                            .addOnCompleteListener(new
                                                                                           OnCompleteListener<Void>() {
                                                                                               @Override
@@ -209,18 +224,24 @@ public class ChatActivity extends BaseActivity {
      */
     private void loadConversationList() {
 
-        FirebaseDatabase.getInstance().getReference("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+        //FirebaseDatabase.getInstance().getReference("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("conversations").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ChatMessage conversation = ds.getValue(ChatMessage.class);
-                        if (conversation.getReceiver().contentEquals(user.getUid()) || conversation.getSender().contentEquals(user.getUid())) {
-                            convList.add(conversation);
-                            if (lastMsgDate == null
-                                    || lastMsgDate.before(conversation.getDate()))
-                                lastMsgDate = conversation.getDate();
+                        //ChatMessage conversation = ds.getValue(ChatMessage.class);
+                        Conversation tmpConversation = ds.getValue(Conversation.class);
+                        //if (conversation.getReceiver().contentEquals(user.getUid()) || conversation.getSender().contentEquals(user.getUid())) {
+                        if (tmpConversation.getRental_id().contentEquals(rental_id)) {
+                            //convList.add(conversation);
+                            myConversation = tmpConversation;
+
+                            msgList = (ArrayList) myConversation.getChat();
+                            //if (lastMsgDate == null
+                            //        || lastMsgDate.before(tmpConversation.getDate()))
+                            //    lastMsgDate = tmpConversation.getDate();
 
                             adp.notifyDataSetChanged();
 
@@ -248,15 +269,15 @@ public class ChatActivity extends BaseActivity {
          */
         @Override
         public int getCount() {
-            return convList.size();
+            return msgList.size();
         }
 
         /* (non-Javadoc)
          * @see android.widget.Adapter#getItem(int)
          */
         @Override
-        public ChatMessage getItem(int arg0) {
-            return convList.get(arg0);
+        public Chat getItem(int arg0) {
+            return msgList.get(arg0);
         }
 
         /* (non-Javadoc)
@@ -273,11 +294,13 @@ public class ChatActivity extends BaseActivity {
         @SuppressLint("InflateParams")
         @Override
         public View getView(int pos, View v, ViewGroup arg2) {
-            ChatMessage c = getItem(pos);
-            if (c.isSent())
+            Chat c = getItem(pos);
+            //if (c.getSent())
+            if(c.getSender().contentEquals(myUser.getUid())) {
                 v = getLayoutInflater().inflate(R.layout.chat_item_sent, arg2, false);
-            else
+            }else {
                 v = getLayoutInflater().inflate(R.layout.chat_item_rcv, arg2, false);
+            }
 
             TextView lbl = (TextView) v.findViewById(R.id.lbl1);
             lbl.setText(DateUtils.getRelativeDateTimeString(ChatActivity.this, c
@@ -288,11 +311,12 @@ public class ChatActivity extends BaseActivity {
             lbl.setText(c.getMsg());
 
             lbl = (TextView) v.findViewById(R.id.lbl3);
-            if (c.isSent()) {
-                if (c.getStatus() == ChatMessage.STATUS_SENT)
+            //if (c.getSent()) {
+            if(c.getSender().contentEquals(myUser.getUid())) {
+                if (c.getStatus() == Chat.STATUS_SENT)
                     lbl.setText("Delivered");
                 else {
-                    if (c.getStatus() == ChatMessage.STATUS_SENDING)
+                    if (c.getStatus() == Chat.STATUS_SENDING)
                         lbl.setText("Sending...");
                     else {
                         lbl.setText("Failed");

@@ -30,8 +30,12 @@ public class Chat implements Serializable
     private Boolean sent;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private Integer status = STATUS_SENT;
     private final static long serialVersionUID = -2224466915616109928L;
+
+    public static final int STATUS_SENDING = 0;
+    public static final int STATUS_SENT = 1;
+    public static final int STATUS_FAILED = 2;
 
     /**
      * No args constructor for use in serialization
@@ -43,22 +47,22 @@ public class Chat implements Serializable
     /**
      *
      * @param sender
-     * @param sent
+     //* @param sent
      * @param receiver
-     * @param status
-     * @param msg_id
+     //* @param status
+     //* @param msg_id
      * @param date
      * @param msg
      */
-    public Chat(Integer msg_id, Date date, String msg, String receiver, String sender, Boolean sent, Integer status) {
+    public Chat(/*Integer msg_id, */Date date, String msg, String receiver, String sender) {
         super();
-        this.msg_id = msg_id;
+        //this.msg_id = msg_id;
         this.date = date;
         this.msg = msg;
         this.receiver = receiver;
         this.sender = sender;
-        this.sent = sent;
-        this.status = status;
+        //this.sent = sent;
+        //this.status = status;
     }
 
     public Integer getMsg_id() {

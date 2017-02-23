@@ -176,10 +176,7 @@ public class ChatActivity extends BaseActivity {
             //        Calendar.getInstance().getTime(), "Mimi",
             //        user.getUid(), buddy.getId(),
             //        "");
-            final Chat c = new Chat(Calendar.getInstance().getTime(),
-                                    s,
-                                    buddyId,
-                                    user.getUid());
+            final Chat c = new Chat(Calendar.getInstance().getTime(), s, buddyId, user.getUid());
             //c.setStatus(ChatMessage.STATUS_SENDING);
             c.setStatus(Chat.STATUS_SENDING);
             //convList.add(conversation);
@@ -202,8 +199,8 @@ public class ChatActivity extends BaseActivity {
                                                        msgList.get(msgList.indexOf(c)).setStatus(Chat.STATUS_FAILED);
                                                    }
                                                    FirebaseDatabase.getInstance()
-                                                           .getReference("messages")
-                                                           .child(rental_id).child("chat").setValue(msgList.get(msgList.indexOf(c)))
+                                                           .getReference("conversations")
+                                                           .child(rental_id).child("chat").setValue(msgList)
                                                            .addOnCompleteListener(new
                                                                                           OnCompleteListener<Void>() {
                                                                                               @Override

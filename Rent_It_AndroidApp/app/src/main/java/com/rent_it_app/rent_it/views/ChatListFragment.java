@@ -45,11 +45,11 @@ public class ChatListFragment extends Fragment {
     private DatabaseReference mFirebaseDatabaseReference;
 
     /** The Chat list. */
-    private ArrayList<ChatUser> uList;
+    //private ArrayList<ChatUser> uList;
     private ArrayList<Conversation>cList;
 
     /** The user. */
-    public static ChatUser user;
+    //public static ChatUser user;
 
     public ListView list;
 
@@ -139,14 +139,18 @@ public class ChatListFragment extends Fragment {
                         }
                     }
                     //ListView list = (ListView) view.findViewById(R.id.list);
-                    list.setAdapter(new UserAdapter());
+                    list.setAdapter(new ChatListAdapter());
                     list.setOnItemClickListener(new OnItemClickListener() {
 
                         @Override
                         public void onItemClick(AdapterView<?> arg0,
                                                 View arg1, int pos, long arg3) {
+                            /*startActivity(new Intent(getActivity(), ChatActivity.class)
+                                    .putExtra(Config.EXTRA_DATA, uList.get(pos)));*/
+                            /*startActivity(new Intent(getActivity(), ChatActivity.class)
+                                    .putExtra(Config.EXTRA_DATA, cList.get(pos)));*/
                             startActivity(new Intent(getActivity(), ChatActivity.class)
-                                    .putExtra(Config.EXTRA_DATA, uList.get(pos)));
+                                    .putExtra(Config.EXTRA_DATA, cList.get(pos)));
                         }
                     });
 
@@ -163,10 +167,10 @@ public class ChatListFragment extends Fragment {
     }
 
     /**
-     * The Class UserAdapter is the adapter class for User ListView. This
+     * The Class ChatListAdapter is the adapter class for User ListView. This
      * adapter shows the user name and it's only online status for each item.
      */
-    private class UserAdapter extends BaseAdapter
+    private class ChatListAdapter extends BaseAdapter
     {
 
         /* (non-Javadoc)

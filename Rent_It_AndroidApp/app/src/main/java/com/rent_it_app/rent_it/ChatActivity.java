@@ -9,6 +9,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.format.DateUtils;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rent_it_app.rent_it.R;
+import com.rent_it_app.rent_it.json_models.Chat;
 import com.rent_it_app.rent_it.json_models.ChatUser;
 import com.rent_it_app.rent_it.json_models.ChatMessage;
 import com.rent_it_app.rent_it.firebase.Config;
@@ -33,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rent_it_app.rent_it.json_models.Conversation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +46,7 @@ public class ChatActivity extends BaseActivity{
      * The Conversation list.
      */
     private ArrayList<ChatMessage> convList;
+    private ArrayList<Chat> msgList;
 
     /**
      * The chat adapter.
@@ -58,11 +62,14 @@ public class ChatActivity extends BaseActivity{
      * The user name of buddy.
      */
     private ChatUser buddy;
+    private Conversation conversation;
 
     /**
      * The date of last message in conversation.
      */
     private Date lastMsgDate;
+
+    private String rental_id;
 
     /* (non-Javadoc)
      * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
@@ -85,12 +92,16 @@ public class ChatActivity extends BaseActivity{
 
         setTouchNClick(R.id.btnSend);
 
-        buddy = (ChatUser) getIntent().getSerializableExtra(Config.EXTRA_DATA);
+        buddy = new ChatUser("Uhph7zwnAyQnSqHnw0uWbHI6zpv1");
+        //buddy = (ChatUser) getIntent().getSerializableExtra(Config.EXTRA_DATA);
 
-        ActionBar actionBar = getActionBar();
+        conversation = (Conversation) getIntent().getSerializableExtra(Config.EXTRA_DATA);
+        rental_id = conversation.getRental_id();
+
+        /*ActionBar actionBar = getActionBar();
         if(actionBar != null)
-            actionBar.setTitle(buddy.getUsername());
-
+            actionBar.setTitle(buddy.getUsername());*/
+        this.getSupportActionBar().setTitle(buddy.getUsername());
     }
 
     /* (non-Javadoc)

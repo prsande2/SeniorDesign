@@ -25,12 +25,12 @@ public class ChatUser implements Serializable {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public ChatUser(String id, String username, String email, Boolean online, ArrayList<String> room) {
+    public ChatUser(String id/*, String username, String email, Boolean online, ArrayList<String> room*/) {
         this.id = id;
-        this.username = username;
+        /*this.username = username;
         this.email = email;
         this.online = online;
-        this.room = room;
+        this.room = room;*/
     }
 
     public String getUsername() {

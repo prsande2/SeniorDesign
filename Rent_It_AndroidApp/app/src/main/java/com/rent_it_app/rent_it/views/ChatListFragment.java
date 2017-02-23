@@ -48,8 +48,9 @@ public class ChatListFragment extends Fragment {
     //private ArrayList<ChatUser> uList;
     private ArrayList<Conversation>cList;
 
-    /** The user. */
-    //public static ChatUser user;
+    // Todo: delete once switch to use Conversation instead of ChatMessage class
+    public static ChatUser user;
+    public static FirebaseUser myUser;
 
     public ListView list;
 
@@ -105,7 +106,7 @@ public class ChatListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {dia.dismiss();
 
-                FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
+                myUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(myUser != null) {
                     long size = dataSnapshot.getChildrenCount();
                     if (size == 0) {
@@ -122,8 +123,8 @@ public class ChatListFragment extends Fragment {
                         Conversation conversation = ds.getValue(Conversation.class);
 
                         //Logger.getLogger(ChatListFragment.class.getName()).log(Level.ALL,user.getUsername());
-                        Log.d("Test", "conversation.getOwner(): "+ conversation.getOwner());
-                        Log.d("Test", "conversation.getItem_name(): "+ conversation.getItem_name());
+                        //Log.d("Test", "conversation.getOwner(): "+ conversation.getOwner());
+                        //Log.d("Test", "conversation.getItem_name(): "+ conversation.getItem_name());
 
                         /*if (!user.getId().contentEquals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                             uList.add(user);*/
@@ -133,8 +134,8 @@ public class ChatListFragment extends Fragment {
 
                             /*if (lastMsgDate == null || lastMsgDate.before(conversation.getDate()))
                                 lastMsgDate = conversation.getDate();*/
-                            Log.d("Test2", "conversation.getOwner(): "+ conversation.getOwner());
-                            Log.d("Test2", "conversation.getItem_name(): "+ conversation.getItem_name());
+                            //Log.d("Test2", "conversation.getOwner(): "+ conversation.getOwner());
+                            //Log.d("Test2", "conversation.getItem_name(): "+ conversation.getItem_name());
                             //adp.notifyDataSetChanged();
                         }
                     }

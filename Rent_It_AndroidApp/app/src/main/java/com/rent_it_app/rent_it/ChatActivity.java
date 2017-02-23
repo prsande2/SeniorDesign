@@ -10,8 +10,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ChatActivity extends BaseActivity{
+public class ChatActivity extends BaseActivity {
     /**
      * The Conversation list.
      */
@@ -62,7 +64,8 @@ public class ChatActivity extends BaseActivity{
      * The user name of buddy.
      */
     private ChatUser buddy;
-    private Conversation conversation;
+    private String buddyId;
+    private Conversation myConversation;
 
     /**
      * The date of last message in conversation.
@@ -92,16 +95,29 @@ public class ChatActivity extends BaseActivity{
 
         setTouchNClick(R.id.btnSend);
 
-        buddy = new ChatUser("Uhph7zwnAyQnSqHnw0uWbHI6zpv1");
+        //buddy = new ChatUser("Uhph7zwnAyQnSqHnw0uWbHI6zpv1");
         //buddy = (ChatUser) getIntent().getSerializableExtra(Config.EXTRA_DATA);
 
-        conversation = (Conversation) getIntent().getSerializableExtra(Config.EXTRA_DATA);
-        rental_id = conversation.getRental_id();
 
-        /*ActionBar actionBar = getActionBar();
-        if(actionBar != null)
-            actionBar.setTitle(buddy.getUsername());*/
-        this.getSupportActionBar().setTitle(buddy.getUsername());
+        myConversation = (Conversation) getIntent().getSerializableExtra(Config.EXTRA_DATA);
+        rental_id = myConversation.getRental_id();
+
+        FirebaseUser myUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("Test","my uid: "+myUser.getUid());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if(myUser.getUid().contentEquals(myConversation.getRenter())) {
+            buddyId = myConversation.getOwner();
+            Log.d("Test","owner: "+myConversation.getOwner());
+            this.getSupportActionBar().setTitle(buddyId);
+        }else{
+            buddyId = myConversation.getRenter();
+            Log.d("Test","renter: "+myConversation.getRenter());
+            this.getSupportActionBar().setTitle(buddyId);
+        }
+
     }
 
     /* (non-Javadoc)

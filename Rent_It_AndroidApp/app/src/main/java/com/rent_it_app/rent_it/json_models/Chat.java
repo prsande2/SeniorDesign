@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.rent_it_app.rent_it.views.ChatListFragment;
 
 public class Chat implements Serializable
 {
@@ -104,9 +105,16 @@ public class Chat implements Serializable
         return sent;
     }
 
+
     public void setSent(Boolean sent) {
         this.sent = sent;
     }
+
+    /*public boolean isSent()
+    {
+        return ChatListFragment.user.getId().contentEquals(sender);
+        //return ChatListFragment.myUser.getId().contentEquals(sender);
+    }*/
 
     public Integer getStatus() {
         return status;

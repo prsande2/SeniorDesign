@@ -116,7 +116,8 @@ public class ChatMessage {
 
     public boolean isSent()
     {
-        return ChatListFragment.user.getId().contentEquals(sender);
+        //return ChatListFragment.user.getId().contentEquals(sender);
+        return ChatListFragment.myUser.getUid().contentEquals(sender);
     }
 
     public Date getDate() { return date;}

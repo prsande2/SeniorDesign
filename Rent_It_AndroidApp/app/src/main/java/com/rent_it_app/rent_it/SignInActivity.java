@@ -84,10 +84,10 @@ public class SignInActivity extends BaseActivity {
                 hideProgressDialog();
                 if (user != null) {
                     //if logged in
-                    ArrayList<String> defaultRoom = new ArrayList<String>();
-                    defaultRoom.add("home");
-                    ChatListFragment.user = new ChatUser(user.getUid(), user.getDisplayName(),
-                            user.getEmail(),true,defaultRoom);
+                    /*ArrayList<String> defaultRoom = new ArrayList<String>();
+                    defaultRoom.add("home");*/
+                    /*ChatListFragment.user = new ChatUser(user.getUid(), user.getDisplayName(),
+                            user.getEmail(),true,defaultRoom);*/
 
                     Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                     startActivity(intent);

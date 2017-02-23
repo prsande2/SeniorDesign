@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
 import com.rent_it_app.rent_it.R;
 import com.rent_it_app.rent_it.json_models.Chat;
 import com.rent_it_app.rent_it.json_models.ChatUser;
@@ -66,6 +67,7 @@ public class ChatActivity extends BaseActivity {
     private ChatUser buddy;
     private String buddyId;
     private Conversation myConversation;
+    private Chat myChat;
 
     /**
      * The date of last message in conversation.
@@ -224,17 +226,24 @@ public class ChatActivity extends BaseActivity {
      */
     private void loadConversationList() {
 
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("conversations").child(rental_id);
+
         //FirebaseDatabase.getInstance().getReference("messages").addListenerForSingleValueEvent(new ValueEventListener() {
-        FirebaseDatabase.getInstance().getReference("conversations").addListenerForSingleValueEvent(new ValueEventListener() {
+        //FirebaseDatabase.getInstance().getReference("conversations").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    myConversation = dataSnapshot.getValue(Conversation.class);
+                    //for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         //ChatMessage conversation = ds.getValue(ChatMessage.class);
-                        Conversation tmpConversation = ds.getValue(Conversation.class);
+                        //Conversation tmpConversation = ds.getValue(Conversation.class);
+                        //myChat = ds.getValue(Chat.class);
+
                         //if (conversation.getReceiver().contentEquals(user.getUid()) || conversation.getSender().contentEquals(user.getUid())) {
-                        if (tmpConversation.getRental_id().contentEquals(rental_id)) {
+                        /*if (tmpConversation.getRental_id().contentEquals(rental_id)) {
                             //convList.add(conversation);
                             myConversation = tmpConversation;
 
@@ -245,8 +254,9 @@ public class ChatActivity extends BaseActivity {
 
                             adp.notifyDataSetChanged();
 
-                        }
-                    }
+                        }*/
+                        adp.notifyDataSetChanged();
+                    //}
                 }
             }
 

@@ -78,8 +78,9 @@ public class ListItemFragment extends Fragment {
 
     Retrofit retrofit;
     ItemEndpoint itemEndpoint;
-    EditText txtTitle, txtDescription, txtCondition, txtCategory, txtZipcode;
-    EditText txtTags, txtValue, txtRate, txtCity;
+    private EditText txtTitle, txtDescription, txtCondition, txtCategory, txtZipcode;
+    private EditText txtTags, txtValue, txtRate, txtCity;
+    private String myTitle, myDescription, myCondition, myCity, myZip, myTag, myValue, myRate;
     private TextView myStatusText;
     private FirebaseAuth mAuth;
     private String userId;
@@ -200,7 +201,15 @@ public class ListItemFragment extends Fragment {
 
         });
 
-
+        //Define
+        myTitle = txtTitle.getText().toString();
+        myDescription = txtDescription.getText().toString();
+        myCondition = txtCondition.getText().toString();
+        myCity = txtCondition.getText().toString();
+        myZip = txtZipcode.getText().toString();
+        myTag = txtTags.getText().toString();
+        myValue = txtValue.getText().toString();
+        myRate = txtRate.getText().toString();
 
         final Button listButton = (Button) view.findViewById(R.id.list_button);
         //Spinner
@@ -221,83 +230,59 @@ public class ListItemFragment extends Fragment {
             public void onClick(View v)
             {
 
+                //if(true) {
+                    imgS3Name = UUID.randomUUID().toString() + ".jpg";
 
-                // Create a record in a dataset and synchronize with the server
-                /*Dataset dataset = syncClient.openOrCreateDataset("myDataset");
-                dataset.put("myKey", "myValue");
-                dataset.synchronize(new DefaultSyncCallback() {
-                    @Override
-                    public void onSuccess(Dataset dataset, List newRecords) {
-                        //Your handler code here
-                    }
-                });*/
-
-                //Toast.makeText(getActivity(), spinner1.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
-                //post Item
-                imgS3Name = UUID.randomUUID().toString()+".jpg";
-
-                Item listing_item = new Item();
-                listing_item.setUid(userId);
-                listing_item.setTitle(txtTitle.getText().toString());
-                listing_item.setDescription(txtDescription.getText().toString());
-                listing_item.setCondition(txtCondition.getText().toString());
-                listing_item.setCity(txtCity.getText().toString());
-                listing_item.setZipcode(Integer.parseInt(txtZipcode.getText().toString()));
-                String myTags = txtTags.getText().toString();
-                List<String> tags = Arrays.asList(myTags.split("\\s*,\\s*"));
-                listing_item.setTags(tags);
-                listing_item.setValue(Double.parseDouble(txtValue.getText().toString()));
-                listing_item.setRate(Double.parseDouble(txtRate.getText().toString()));
-
-                if(photo_destination != null) {
+                    Item listing_item = new Item();
+                    listing_item.setUid(userId);
+                    listing_item.setTitle(txtTitle.getText().toString());
+                    listing_item.setDescription(txtDescription.getText().toString());
+                    listing_item.setCondition(txtCondition.getText().toString());
+                    listing_item.setCity(txtCity.getText().toString());
+                    listing_item.setZipcode(Integer.parseInt(txtZipcode.getText().toString()));
+                    String myTags = txtTags.getText().toString();
+                    List<String> tags = Arrays.asList(myTags.split("\\s*,\\s*"));
+                    listing_item.setTags(tags);
+                    listing_item.setValue(Double.parseDouble(txtValue.getText().toString()));
+                    listing_item.setRate(Double.parseDouble(txtRate.getText().toString()));
+                    //if(photo_destination != null) {
                     listing_item.setImage(imgS3Name);
-                }
+                    //}
 
-                /*if(listing_item != null)
-                {
-                    Log.d("item.getUid:", listing_item.getUid());
-                    Log.d("item.getTitle:", listing_item.getTitle());
-                    Log.d("item.tags null?", "" + (listing_item.getTags() == null));
-                    Log.d("item.tags empty?", "" + listing_item.getTags().isEmpty());
-                    for(String t: listing_item.getTags())
-                    {
-                        Log.d("item.tag null?", "" + (t == null));
-                        Log.d("item.tag is: ", t);
-                    }
-                    String itemString = gson.toJson(listing_item);
-                    Log.d("gson'ed Item: ", itemString);
-                }*/
 
-                Call<Item> call = itemEndpoint.addItem(listing_item);
-                call.enqueue(new Callback<Item>() {
-                    @Override
-                    public void onResponse(Call<Item> call, Response<Item> response) {
-                        int statusCode = response.code();
+                    Call<Item> call = itemEndpoint.addItem(listing_item);
+                    call.enqueue(new Callback<Item>() {
+                        @Override
+                        public void onResponse(Call<Item> call, Response<Item> response) {
+                            int statusCode = response.code();
 
-                        Log.d("retrofit.call.enqueue", ""+statusCode);
+                            Log.d("retrofit.call.enqueue", "" + statusCode);
 
-                        //Log.d("photo_dest!=null?", photo_destination.toString());
-                        if(photo_destination != null)
-                        {
-                            Log.d("photo_destination!=null", ""+(photo_destination!=null));
-                            AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
-                            TransferUtility transferUtility = new TransferUtility(s3, getContext());
-                            TransferObserver observer = transferUtility.upload(
-                                    getString(R.string.BUCKET_NAME),
-                                    imgS3Name,
-                                    photo_destination
-                            );
+                            //Log.d("photo_dest!=null?", photo_destination.toString());
+                            if (photo_destination != null) {
+                                Log.d("photo_destination!=null", "" + (photo_destination != null));
+                                AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
+                                TransferUtility transferUtility = new TransferUtility(s3, getContext());
+                                TransferObserver observer = transferUtility.upload(
+                                        getString(R.string.BUCKET_NAME),
+                                        imgS3Name,
+                                        photo_destination
+                                );
+                            }
+                            Toast.makeText(getActivity(), "Sucessfully Created New Listing", Toast.LENGTH_LONG).show();
                         }
-                        Toast.makeText(getActivity(),"Sucessfully Created New Listing",Toast.LENGTH_LONG).show();
-                    }
 
-                    @Override
-                    public void onFailure(Call<Item> call, Throwable t) {
-                        Log.d("retrofit.call.enqueue", t.toString());
-                    }
+                        @Override
+                        public void onFailure(Call<Item> call, Throwable t) {
+                            Log.d("retrofit.call.enqueue", t.toString());
+                        }
 
-                });
-                //end of post item
+                    });
+                    //end of post item
+                //}else{
+                    /*et.setHint("please enter username");
+                    et.setError("please enter username");*/
+                //}
             }
         });
         //Button - Image

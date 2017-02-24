@@ -10,6 +10,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.contrib.NavigationViewActions.navigateTo;
 
 import static android.support.test.espresso.Espresso.onView;
 import android.support.test.espresso.contrib.DrawerActions;
@@ -44,9 +45,10 @@ public class HomeActivityEspressoTest {
 
         // Click on the List Item option
         //onView(withId(R.id.nav_list)).perform(click());
+        onView(withId(R.id.nav_view)).perform(navigateTo(R.id.nav_list));
 
         //check the fragments text is now visible in the activity
-        //fragmentText.check(ViewAssertions.matches(isDisplayed()));
+        fragmentText.check(ViewAssertions.matches(isDisplayed()));
     }
 
 }

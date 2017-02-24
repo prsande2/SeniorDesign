@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="@string/item_title"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp" />
 
 
         <EditText

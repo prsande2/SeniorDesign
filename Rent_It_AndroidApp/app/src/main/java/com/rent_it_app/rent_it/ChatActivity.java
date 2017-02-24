@@ -48,7 +48,6 @@ public class ChatActivity extends BaseActivity {
     /**
      * The Conversation list.
      */
-    //private ArrayList<ChatMessage> convList;
     private ArrayList<Chat> msgList;
 
     /**
@@ -89,7 +88,6 @@ public class ChatActivity extends BaseActivity {
         myConversation = (Conversation) getIntent().getSerializableExtra(Config.EXTRA_DATA);
         rental_id = myConversation.getRental_id();
 
-        //convList = new ArrayList<Chat>();
         msgList = (ArrayList) myConversation.getChat();
         ListView list = (ListView) findViewById(R.id.list);
         adp = new ChatAdapter();
@@ -102,12 +100,6 @@ public class ChatActivity extends BaseActivity {
                 | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 
         setTouchNClick(R.id.btnSend);
-
-        //buddy = new ChatUser("Uhph7zwnAyQnSqHnw0uWbHI6zpv1");
-        //buddy = (ChatUser) getIntent().getSerializableExtra(Config.EXTRA_DATA);
-
-
-
 
         myUser = FirebaseAuth.getInstance().getCurrentUser();
         Log.d("Test","my uid: "+myUser.getUid());
@@ -172,22 +164,9 @@ public class ChatActivity extends BaseActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
-            //final ChatMessage conversation = new ChatMessage(s,
-            //        Calendar.getInstance().getTime(), "Mimi",
-            //        user.getUid(), buddy.getId(),
-            //        "");
             final Chat c = new Chat(Calendar.getInstance().getTime(), s, buddyId, user.getUid());
-            //c.setStatus(ChatMessage.STATUS_SENDING);
             c.setStatus(Chat.STATUS_SENDING);
-            //convList.add(conversation);
             msgList.add(c);
-            /*final String key = FirebaseDatabase.getInstance()
-                    .getReference("messages")
-                    .push().getKey();*/
-            /*final String key = FirebaseDatabase.getInstance()
-                    .getReference("conversations")
-                    .push().getKey();*/
-            //FirebaseDatabase.getInstance().getReference("messages").child(key)
             FirebaseDatabase.getInstance().getReference("conversations").child(rental_id).child("chat")
                     .setValue(msgList)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -226,34 +205,13 @@ public class ChatActivity extends BaseActivity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("conversations").child(rental_id);
 
-        //FirebaseDatabase.getInstance().getReference("messages").addListenerForSingleValueEvent(new ValueEventListener() {
-        //FirebaseDatabase.getInstance().getReference("conversations").addListenerForSingleValueEvent(new ValueEventListener() {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null) {
                     myConversation = dataSnapshot.getValue(Conversation.class);
-                    //for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        //ChatMessage conversation = ds.getValue(ChatMessage.class);
-                        //Conversation tmpConversation = ds.getValue(Conversation.class);
-                        //myChat = ds.getValue(Chat.class);
-
-                        //if (conversation.getReceiver().contentEquals(user.getUid()) || conversation.getSender().contentEquals(user.getUid())) {
-                        /*if (tmpConversation.getRental_id().contentEquals(rental_id)) {
-                            //convList.add(conversation);
-                            myConversation = tmpConversation;
-
-                            msgList = (ArrayList) myConversation.getChat();
-                            //if (lastMsgDate == null
-                            //        || lastMsgDate.before(tmpConversation.getDate()))
-                            //    lastMsgDate = tmpConversation.getDate();
-
-                            adp.notifyDataSetChanged();
-
-                        }*/
-                        adp.notifyDataSetChanged();
-                    //}
+                    adp.notifyDataSetChanged();
                 }
             }
 
@@ -302,7 +260,6 @@ public class ChatActivity extends BaseActivity {
         @Override
         public View getView(int pos, View v, ViewGroup arg2) {
             Chat c = getItem(pos);
-            //if (c.getSent())
             if(c.getSender().contentEquals(myUser.getUid())) {
                 v = getLayoutInflater().inflate(R.layout.chat_item_sent, arg2, false);
             }else {
@@ -318,7 +275,6 @@ public class ChatActivity extends BaseActivity {
             lbl.setText(c.getMsg());
 
             lbl = (TextView) v.findViewById(R.id.lbl3);
-            //if (c.getSent()) {
             if(c.getSender().contentEquals(myUser.getUid())) {
                 if (c.getStatus() == Chat.STATUS_SENT)
                     lbl.setText("Delivered");

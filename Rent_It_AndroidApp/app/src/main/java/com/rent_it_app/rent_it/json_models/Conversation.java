@@ -1,6 +1,7 @@
 package com.rent_it_app.rent_it.json_models;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -23,9 +24,12 @@ public class Conversation implements Serializable
     @SerializedName("renter")
     @Expose
     private String renter;
-    @SerializedName("last_active")
+    @SerializedName("lastMsgDate")
     @Expose
-    private String last_active;
+    private Date lastMsgDate;
+    /*@SerializedName("last_active")
+    @Expose
+    private String last_active;*/
     @SerializedName("chat")
     @Expose
     private List<Chat> chat = null;
@@ -42,20 +46,22 @@ public class Conversation implements Serializable
      *
      * @param item_name
      * @param last_active
+     * @param lastMsgDate
      * @param renter
      * @param owner
      * @param rental_id
      * @param chat
      * @param item_id
      */
-    public Conversation(String rental_id, String item_id, String item_name, String owner, String renter, String last_active, List<Chat> chat) {
+    public Conversation(String rental_id, String item_id, String item_name, String owner, String renter, /*String last_active,*/Date lastMsgDate, List<Chat> chat) {
         super();
         this.rental_id = rental_id;
         this.item_id = item_id;
         this.item_name = item_name;
         this.owner = owner;
         this.renter = renter;
-        this.last_active = last_active;
+        //this.last_active = last_active;
+        this.lastMsgDate = lastMsgDate;
         this.chat = chat;
     }
 
@@ -99,13 +105,22 @@ public class Conversation implements Serializable
         this.renter = renter;
     }
 
-    public String getLast_active() {
+    /*public String getLast_active() {
         return last_active;
     }
 
     public void setLast_active(String last_active) {
         this.last_active = last_active;
+    }*/
+
+    public Date getLastMsgDate() {
+        return lastMsgDate;
     }
+
+    public void setLastMsgDate(Date date) {
+        this.lastMsgDate = lastMsgDate;
+    }
+
 
     public List<Chat> getChat() {
         return chat;

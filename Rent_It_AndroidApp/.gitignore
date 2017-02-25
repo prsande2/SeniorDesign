@@ -50,3 +50,4 @@ google-services.json
 
 # Constants used to connect to outside resources
 app/src/main/res/values/keys.xml
+app/src/main/java/com/rent_it_app/rent_it/Constants.java

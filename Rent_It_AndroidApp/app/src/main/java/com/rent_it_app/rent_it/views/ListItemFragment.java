@@ -44,6 +44,7 @@ import com.google.gson.Gson;
 import com.rent_it_app.rent_it.HomeActivity;
 import com.rent_it_app.rent_it.R;
 import com.rent_it_app.rent_it.utils.Utility;
+import com.rent_it_app.rent_it.Constants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -80,7 +81,7 @@ public class ListItemFragment extends Fragment {
     ItemEndpoint itemEndpoint;
     private EditText txtTitle, txtDescription, txtCondition, txtCategory, txtZipcode;
     private EditText txtTags, txtValue, txtRate, txtCity;
-    private String myTitle, myDescription, myCondition, myCity, myZip, myTag, myValue, myRate;
+    private String myTitle, myDescription, myCondition, myCategory, myZipcode, myTags, myValue, myRate, myCity;
     private TextView myStatusText;
     private FirebaseAuth mAuth;
     private String userId;
@@ -105,8 +106,12 @@ public class ListItemFragment extends Fragment {
         //setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("LIST ITEM");
 
-        retrofit = new Retrofit.Builder()
+        /*retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.REST_API_BASE_URL))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();*/
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.REST_API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -115,9 +120,14 @@ public class ListItemFragment extends Fragment {
         gson = new Gson();
 
         // Initialize the Amazon Cognito credentials provider
-        credentialsProvider = new CognitoCachingCredentialsProvider(
+        /*credentialsProvider = new CognitoCachingCredentialsProvider(
                 getContext(),  // getApplicationContext(),
                 getString(R.string.COGNITO_POOL_ID), // Identity Pool ID
+                Regions.US_WEST_2 // Region
+        );*/
+        credentialsProvider = new CognitoCachingCredentialsProvider(
+                getContext(),  // getApplicationContext(),
+                Constants.COGNITO_POOL_ID, // Identity Pool ID
                 Regions.US_WEST_2 // Region
         );
 
@@ -201,15 +211,7 @@ public class ListItemFragment extends Fragment {
 
         });
 
-        //Define
-        myTitle = txtTitle.getText().toString();
-        myDescription = txtDescription.getText().toString();
-        myCondition = txtCondition.getText().toString();
-        myCity = txtCondition.getText().toString();
-        myZip = txtZipcode.getText().toString();
-        myTag = txtTags.getText().toString();
-        myValue = txtValue.getText().toString();
-        myRate = txtRate.getText().toString();
+
 
         final Button listButton = (Button) view.findViewById(R.id.list_button);
         //Spinner
@@ -229,26 +231,90 @@ public class ListItemFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
+                //Define
+                myTitle = txtTitle.getText().toString();
+                myDescription = txtDescription.getText().toString();
+                myCondition = txtCondition.getText().toString();
+                myCategory = spinner1.getSelectedItem().toString();
+                myCity = txtCity.getText().toString();
+                myZipcode = txtZipcode.getText().toString();
+                myTags = txtTags.getText().toString();
+                myValue = txtValue.getText().toString();
+                myRate= txtRate.getText().toString();
 
-                //if(true) {
+                //Log.d("Category","category is: "+myCategory);
+                if (myTitle.trim().equals("")) {
+                    txtTitle.requestFocus();
+                    txtTitle.setError("Title is required!");
+
+                }else if (myDescription.trim().equals("")) {
+                    txtDescription.requestFocus();
+                    txtDescription.setError("Description is required!");
+
+                }else if (myCondition.trim().equals("")) {
+                    txtCondition.requestFocus();
+                    txtCondition.setError("Condition is required!");
+
+                }else if (myCategory.trim().equals("")) {
+                    txtCategory.requestFocus();
+                    txtCategory.setError("Category is required!");
+
+                }else if (myCity.trim().equals("")) {
+                    txtCity.requestFocus();
+                    txtCity.setError("City is required!");
+
+                }else if (myZipcode.trim().equals("")) {
+                    txtZipcode.requestFocus();
+                    txtZipcode.setError("Zipcode is required!");
+
+                }else if (myTags.trim().equals("")) {
+                    txtTags.requestFocus();
+                    txtTags.setError("Tag is required!");
+
+                }else if (myValue.trim().equals("")) {
+                    txtValue.requestFocus();
+                    txtValue.setError("Value is required!");
+
+                }else if (myRate.trim().equals("")) {
+                    txtRate.requestFocus();
+                    txtRate.setError("Rate is required!");
+
+                }else {
+                    //Toast.makeText(getActivity(), spinner1.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+                    //post Item
                     imgS3Name = UUID.randomUUID().toString() + ".jpg";
 
                     Item listing_item = new Item();
                     listing_item.setUid(userId);
-                    listing_item.setTitle(txtTitle.getText().toString());
-                    listing_item.setDescription(txtDescription.getText().toString());
-                    listing_item.setCondition(txtCondition.getText().toString());
-                    listing_item.setCity(txtCity.getText().toString());
-                    listing_item.setZipcode(Integer.parseInt(txtZipcode.getText().toString()));
-                    String myTags = txtTags.getText().toString();
+                    listing_item.setTitle(myTitle);
+                    listing_item.setDescription(myDescription);
+                    listing_item.setCondition(myCondition);
+                    listing_item.setCategory(myCategory);
+                    listing_item.setCity(myCity);
+                    listing_item.setZipcode(Integer.parseInt(myZipcode));
                     List<String> tags = Arrays.asList(myTags.split("\\s*,\\s*"));
                     listing_item.setTags(tags);
-                    listing_item.setValue(Double.parseDouble(txtValue.getText().toString()));
-                    listing_item.setRate(Double.parseDouble(txtRate.getText().toString()));
-                    //if(photo_destination != null) {
-                    listing_item.setImage(imgS3Name);
-                    //}
+                    listing_item.setValue(Double.parseDouble(myValue));
+                    listing_item.setRate(Double.parseDouble(myRate));
 
+                    if (photo_destination != null) {
+                        listing_item.setImage(imgS3Name);
+                    }
+
+                        /*if(listing_item != null)
+                        {
+                            Log.d("item.getUid:", listing_item.getUid());
+                            Log.d("item.getTitle:", listing_item.getTitle());
+                            Log.d("item.tags null?", "" + (listing_item.getTags() == null));
+                            Log.d("item.tags empty?", "" + listing_item.getTags().isEmpty());
+                            for(String t: listing_item.getTags())
+                            {
+                                Log.d("item.tag null?", "" + (t == null));
+                                Log.d("item.tag is: ", t);
+                            }
+                            String itemString = gson.toJson(listing_item);
+                            Log.d("gson'ed Item: ", itemString);
+                        }*/
 
                     Call<Item> call = itemEndpoint.addItem(listing_item);
                     call.enqueue(new Callback<Item>() {
@@ -263,8 +329,13 @@ public class ListItemFragment extends Fragment {
                                 Log.d("photo_destination!=null", "" + (photo_destination != null));
                                 AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
                                 TransferUtility transferUtility = new TransferUtility(s3, getContext());
+                                    /*TransferObserver observer = transferUtility.upload(
+                                            getString(R.string.BUCKET_NAME),
+                                            imgS3Name,
+                                            photo_destination
+                                    );*/
                                 TransferObserver observer = transferUtility.upload(
-                                        getString(R.string.BUCKET_NAME),
+                                        Constants.BUCKET_NAME,
                                         imgS3Name,
                                         photo_destination
                                 );
@@ -279,10 +350,7 @@ public class ListItemFragment extends Fragment {
 
                     });
                     //end of post item
-                //}else{
-                    /*et.setHint("please enter username");
-                    et.setError("please enter username");*/
-                //}
+                }//end of if statement
             }
         });
         //Button - Image

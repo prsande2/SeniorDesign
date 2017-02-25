@@ -55,7 +55,7 @@ public class Item {
     @Expose
     private Boolean visible;
 
-    public Item()
+    /*public Item()
     {
         id = "";
         uid = "";
@@ -74,7 +74,7 @@ public class Item {
         rate = 0.0;
         image = "";
         visible = false;
-    }
+    }*/
 
     public String getId() {
         return id;

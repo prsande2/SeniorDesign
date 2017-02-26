@@ -43,12 +43,14 @@ import com.rent_it_app.rent_it.json_models.Conversation;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ChatActivity extends BaseActivity {
     /**
      * The Conversation list.
      */
     private ArrayList<Chat> msgList;
+    private int lastSentMsgOffset;
 
     /**
      * The chat adapter.
@@ -90,7 +92,7 @@ public class ChatActivity extends BaseActivity {
 
         msgList = (ArrayList) myConversation.getChat();
         ListView list = (ListView) findViewById(R.id.list);
-        adp = new ChatAdapter();
+        adp = new ChatAdapter(msgList);
         list.setAdapter(adp);
         list.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         list.setStackFromBottom(true);
@@ -167,15 +169,18 @@ public class ChatActivity extends BaseActivity {
             final Chat c = new Chat(Calendar.getInstance().getTime(), s, buddyId, user.getUid());
             c.setStatus(Chat.STATUS_SENDING);
             msgList.add(c);
+            lastSentMsgOffset = msgList.size() - 1;
             FirebaseDatabase.getInstance().getReference("conversations").child(rental_id).child("chat")
                     .setValue(msgList)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                @Override
                                                public void onComplete(@NonNull Task<Void> task) {
                                                    if (task.isSuccessful()) {
-                                                       msgList.get(msgList.indexOf(c)).setStatus(Chat.STATUS_SENT);
+                                                       //msgList.get(msgList.indexOf(c)).setStatus(Chat.STATUS_SENT);
+                                                       msgList.get(lastSentMsgOffset).setStatus(Chat.STATUS_SENT);
                                                    } else {
-                                                       msgList.get(msgList.indexOf(c)).setStatus(Chat.STATUS_FAILED);
+                                                       //msgList.get(msgList.indexOf(c)).setStatus(Chat.STATUS_FAILED);
+                                                       msgList.get(lastSentMsgOffset).setStatus(Chat.STATUS_FAILED);
                                                    }
                                                    FirebaseDatabase.getInstance()
                                                            .getReference("conversations")
@@ -184,7 +189,8 @@ public class ChatActivity extends BaseActivity {
                                                                                           OnCompleteListener<Void>() {
                                                                                               @Override
                                                                                               public void onComplete(@NonNull Task<Void> task) {
-                                                                                                  adp.notifyDataSetChanged();
+                                                                                                  adp.swapMsgs(msgList);
+                                                                                                  //adp.notifyDataSetChanged();
                                                                                               }
                                                                                           });
 
@@ -192,7 +198,8 @@ public class ChatActivity extends BaseActivity {
                                            }
                     );
         }
-        adp.notifyDataSetChanged();
+        adp.swapMsgs(msgList);
+        //adp.notifyDataSetChanged();
         txt.setText(null);
     }
 
@@ -205,13 +212,15 @@ public class ChatActivity extends BaseActivity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("conversations").child(rental_id);
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null) {
                     myConversation = dataSnapshot.getValue(Conversation.class);
-                    adp.notifyDataSetChanged();
+                    msgList = (ArrayList) myConversation.getChat();
+                    adp.swapMsgs(msgList);
+                    //adp.notifyDataSetChanged();
                 }
             }
 
@@ -229,12 +238,23 @@ public class ChatActivity extends BaseActivity {
      */
     private class ChatAdapter extends BaseAdapter {
 
+        List<Chat> chatMsgs;
+
+        public ChatAdapter(List<Chat> chatList) {
+            this.chatMsgs = chatList;
+        }
+
+        public void swapMsgs(List<Chat> chatList) {
+            this.chatMsgs = chatList;
+            notifyDataSetChanged();
+        }
+
         /* (non-Javadoc)
          * @see android.widget.Adapter#getCount()
          */
         @Override
         public int getCount() {
-            return msgList.size();
+            return chatMsgs.size();
         }
 
         /* (non-Javadoc)
@@ -242,7 +262,7 @@ public class ChatActivity extends BaseActivity {
          */
         @Override
         public Chat getItem(int arg0) {
-            return msgList.get(arg0);
+            return chatMsgs.get(arg0);
         }
 
         /* (non-Javadoc)

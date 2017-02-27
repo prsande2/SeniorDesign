@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.not;
 import com.rent_it_app.rent_it.views.ListItemFragment;
 
 /**
- * Created by Nagoya on 2/14/17.
+ * Created by Mimi on 2/14/17.
  */
 
 @RunWith(AndroidJUnit4.class)
@@ -105,7 +105,7 @@ public class HomeActivityEspressoTest {
 
         //input value besides description
         onView(withId(R.id.title)).perform(typeText("8 People Tent"), closeSoftKeyboard());
-        onView(withId(R.id.description)).perform(typeText("Here's come description"), closeSoftKeyboard());
+        onView(withId(R.id.description)).perform(typeText("Here's some description"), closeSoftKeyboard());
         onView(withId(R.id.condition)).perform(typeText("like new"), closeSoftKeyboard());
         onView(withId(R.id.city)).perform(typeText("Troy"), closeSoftKeyboard());
         onView(withId(R.id.zipcode)).perform(typeText("48084"), closeSoftKeyboard());

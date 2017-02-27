@@ -14,7 +14,12 @@ Genre = require('./models/genre');
 Item = require('./models/item');
 
 //Connect to Mongoose
-mongoose.connect(process.env.MONGO_DB_URL);
+var connection_options = {
+	user: process.env.MONGO_DB_USER,
+	pass: process.env.MONGO_DB_PASS
+};
+mongoose.connect(process.env.MONGO_DB_URL,
+					connection_options);
 //mongoose.connect('mongodb://localhost/rent_it');
 //mongoose.connect('mongodb://localhost/bookstore');
 var db = mongoose.connection;

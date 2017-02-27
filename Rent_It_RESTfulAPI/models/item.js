@@ -15,6 +15,9 @@ var itemSchema = mongoose.Schema({
 	condition:{
 		type:String
 	},
+	category:{
+		type:String
+	},
 	location:{
 		type:Array
 	},

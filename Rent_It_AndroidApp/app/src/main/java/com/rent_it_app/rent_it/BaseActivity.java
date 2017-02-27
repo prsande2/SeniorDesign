@@ -7,8 +7,13 @@ package com.rent_it_app.rent_it;
 import android.app.ProgressDialog;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
-public class BaseActivity extends AppCompatActivity {
+import com.rent_it_app.rent_it.utils.TouchEffect;
+
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final TouchEffect TOUCH = new TouchEffect();
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
@@ -48,6 +53,46 @@ public class BaseActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         hideProgressDialog();
+    }
+    /**
+     * Sets the touch and click listener for a view with given id.
+     *
+     * @param id
+     *            the id
+     * @return the view on which listeners applied
+     */
+    public View setTouchNClick(int id)
+    {
+
+        View v = setClick(id);
+        if (v != null)
+            v.setOnTouchListener(TOUCH);
+        return v;
+    }
+
+    /**
+     * Sets the click listener for a view with given id.
+     *
+     * @param id
+     *            the id
+     * @return the view on which listener is applied
+     */
+    public View setClick(int id)
+    {
+
+        View v = findViewById(id);
+        if (v != null)
+            v.setOnClickListener(this);
+        return v;
+    }
+
+    /* (non-Javadoc)
+     * @see android.view.View.OnClickListener#onClick(android.view.View)
+     */
+    @Override
+    public void onClick(View v)
+    {
+
     }
 
 }

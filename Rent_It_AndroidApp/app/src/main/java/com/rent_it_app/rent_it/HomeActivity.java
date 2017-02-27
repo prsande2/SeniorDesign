@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.content.Intent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.rent_it_app.rent_it.views.ChatListFragment;
 import com.rent_it_app.rent_it.views.InventoryFragment;
 import com.rent_it_app.rent_it.views.ListItemFragment;
 
@@ -28,7 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;*/
 
-public class HomeActivity extends AppCompatActivity
+public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView myStatusText;
@@ -167,7 +168,7 @@ public class HomeActivity extends AppCompatActivity
             } else if (id == R.id.nav_inventory) {
                 fragmentClass = InventoryFragment.class;
             } else if (id == R.id.nav_inbox) {
-                //fragmentClass = ListItemFragment.class;
+                fragmentClass = ChatListFragment.class;
             } else if (id == R.id.nav_account) {
                 //fragmentClass = ListItemFragment.class;
             } else if (id == R.id.nav_claim) {

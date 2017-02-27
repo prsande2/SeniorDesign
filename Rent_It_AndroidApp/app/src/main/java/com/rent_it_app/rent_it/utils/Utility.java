@@ -1,4 +1,4 @@
-package com.rent_it_app.rent_it;
+package com.rent_it_app.rent_it.utils;
 
 import android.Manifest;
 import android.annotation.TargetApi;

@@ -1,5 +1,6 @@
 package com.rent_it_app.rent_it.json_models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -16,8 +17,10 @@ public interface ItemEndpoint {
     // Request method and URL specified in the annotation
     // Callback for the parsed response is the last parameter
 
+    /*@GET("api/items")
+    Call<List<Item>> getItems(*//*@Path("uid") String uid*//*);*/
     @GET("api/items")
-    Call<List<Item>> getItems(/*@Path("uid") String uid*/);
+    Call<ArrayList<Item>> getItems(/*@Path("uid") String uid*/);
 
     /*@GET("group/{id}/users")
     Call<List<User>> groupList(@Path("id") int groupId, @Query("sort") String sort);*/

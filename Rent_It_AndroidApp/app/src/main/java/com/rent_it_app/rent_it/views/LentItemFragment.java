@@ -12,10 +12,10 @@ import com.rent_it_app.rent_it.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InventoryFragment extends Fragment {
+public class LentItemFragment extends Fragment {
 
 
-    public InventoryFragment() {
+    public LentItemFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inventory, container, false);
+        return inflater.inflate(R.layout.fragment_available_item, container, false);
     }
 
 }

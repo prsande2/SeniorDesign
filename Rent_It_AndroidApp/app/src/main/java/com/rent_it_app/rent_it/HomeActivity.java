@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +18,7 @@ import android.content.Intent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.rent_it_app.rent_it.views.ChatListFragment;
-import com.rent_it_app.rent_it.views.InventoryFragment;
+import com.rent_it_app.rent_it.views.AvailabeItemFragment;
 import com.rent_it_app.rent_it.views.ListItemFragment;
 
 /*import com.google.firebase.database.DataSnapshot;
@@ -166,7 +164,7 @@ public class HomeActivity extends BaseActivity
             } else if (id == R.id.nav_rental) {
                 //fragmentClass = ListItemFragment.class;
             } else if (id == R.id.nav_inventory) {
-                fragmentClass = InventoryFragment.class;
+                fragmentClass = AvailabeItemFragment.class;
             } else if (id == R.id.nav_inbox) {
                 fragmentClass = ChatListFragment.class;
             } else if (id == R.id.nav_account) {

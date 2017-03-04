@@ -1,7 +1,7 @@
 package com.rent_it_app.rent_it;
 
 /**
- * Created by Nagoya on 2/21/17.
+ * Created by Mimi on 2/21/17.
  */
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -28,7 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.rent_it_app.rent_it.R;
 import com.rent_it_app.rent_it.json_models.Chat;
 import com.rent_it_app.rent_it.json_models.ChatUser;
-import com.rent_it_app.rent_it.json_models.ChatMessage;
 import com.rent_it_app.rent_it.firebase.Config;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

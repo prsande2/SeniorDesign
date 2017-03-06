@@ -5,12 +5,13 @@ package com.rent_it_app.rent_it.json_models;
  * http://www.jsonschema2pojo.org/
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Item {
+public class Item implements Serializable {
 
     @SerializedName("_id")
     @Expose

@@ -79,7 +79,7 @@ public class ListItemFragment extends Fragment {
 
     Retrofit retrofit;
     ItemEndpoint itemEndpoint;
-    private EditText txtTitle, txtDescription, txtCondition, txtCategory, txtZipcode;
+    private EditText txtTitle, txtDescription, txtCondition, txtZipcode;
     private EditText txtTags, txtValue, txtRate, txtCity;
     private String myTitle, myDescription, myCondition, myCategory, myZipcode, myTags, myValue, myRate, myCity;
     private TextView myStatusText;
@@ -254,10 +254,6 @@ public class ListItemFragment extends Fragment {
                 }else if (myCondition.trim().equals("")) {
                     txtCondition.requestFocus();
                     txtCondition.setError("Condition is required!");
-
-                }else if (myCategory.trim().equals("")) {
-                    txtCategory.requestFocus();
-                    txtCategory.setError("Category is required!");
 
                 }else if (myCity.trim().equals("")) {
                     txtCity.requestFocus();

@@ -50,6 +50,7 @@
     <string name="item_value">Value</string>
     <string name="item_rate">Daily Rate</string>
     <string name="item_image">Image</string>
+    <string name="item_visibility">Visibility</string>
 
     <!--Category-->
     <string name="category_prompt">Choose a category</string>

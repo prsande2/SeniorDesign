@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rent_it_app.rent_it.Constants;
+import com.rent_it_app.rent_it.EditItemActivity;
 import com.rent_it_app.rent_it.R;
 import com.rent_it_app.rent_it.firebase.Config;
 import com.rent_it_app.rent_it.json_models.Genre;
@@ -100,12 +101,13 @@ public class AvailabeItemFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
                 int statusCode = response.code();
-                List<Item> items = response.body();
+                //List<Item> items = response.body();
                 iList = response.body();
-                StringBuilder sb = new StringBuilder();
+                /*StringBuilder sb = new StringBuilder();
                 for (Item i: items){
                     sb.append(i.getTitle() + ",");
-                }
+                }*/
+
                 //tv1.setText(sb.toString());
                 list.setAdapter(new ItemListAdapter());
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,8 +115,8 @@ public class AvailabeItemFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> arg0,
                                             View arg1, int pos, long arg3) {
-
-                        //startActivity(new Intent(getActivity(), LentItemFragment.class).putExtra(Config.EXTRA_DATA, iList.get(pos)));
+                        startActivity(new Intent(getActivity(), EditItemActivity.class)
+                                .putExtra(Config.EXTRA_DATA, iList.get(pos)));
                     }
                 });
 

@@ -292,6 +292,7 @@ public class ListItemFragment extends Fragment {
                     listing_item.setTags(tags);
                     listing_item.setValue(Double.parseDouble(myValue));
                     listing_item.setRate(Double.parseDouble(myRate));
+                    listing_item.setVisible(true);
 
                     if (photo_destination != null) {
                         listing_item.setImage(imgS3Name);

@@ -43,8 +43,7 @@ var itemSchema = mongoose.Schema({
 		type:String
 	},
 	visible:{
-		type:Boolean,
-		default: true
+		type:Boolean
 	},
 	created_date:{
 		type: Date,

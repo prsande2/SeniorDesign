@@ -14,17 +14,16 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
+import com.amazonaws.regions.Regions;
 import com.google.gson.Gson;
 import com.rent_it_app.rent_it.Constants;
 import com.rent_it_app.rent_it.EditItemActivity;
 import com.rent_it_app.rent_it.R;
 import com.rent_it_app.rent_it.firebase.Config;
-import com.rent_it_app.rent_it.json_models.Genre;
-import com.rent_it_app.rent_it.json_models.GenreEndpoint;
-import com.rent_it_app.rent_it.json_models.GenrePost;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +31,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import com.rent_it_app.rent_it.R;
 import com.rent_it_app.rent_it.json_models.Item;
 import com.rent_it_app.rent_it.json_models.ItemEndpoint;
 
@@ -52,6 +50,8 @@ public class AvailabeItemFragment extends Fragment {
     Gson gson;
     private ArrayList<Item> iList;
     private ListView list;
+    CognitoCachingCredentialsProvider credentialsProvider;
+    CognitoSyncManager syncClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +70,18 @@ public class AvailabeItemFragment extends Fragment {
                 .build();
 
         itemEndpoint = retrofit.create(ItemEndpoint.class);
+
+        credentialsProvider = new CognitoCachingCredentialsProvider(
+                getContext(),  // getApplicationContext(),
+                Constants.COGNITO_POOL_ID, // Identity Pool ID
+                Regions.US_WEST_2 // Region
+        );
+
+        // Initialize the Cognito Sync client
+        syncClient = new CognitoSyncManager(
+                getContext(),
+                Regions.US_WEST_2, // Region
+                credentialsProvider);
 
         return view;
     }

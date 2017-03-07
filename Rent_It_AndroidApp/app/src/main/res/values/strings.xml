@@ -55,12 +55,18 @@
     <!--Category-->
     <string name="category_prompt">Choose a category</string>
     <string-array name="category_array">
-        <item>Camping</item>
-        <item>Tools</item>
-        <item>Wheels</item>
-        <item>Electronics</item>
+        <item>Vehicles and Equipment</item>
         <item>Sports</item>
-        <item>Home</item>
+        <item>Outdoor Gear</item>
+        <item>Party Supplies</item>
+        <item>Garden</item>
+        <item>Tools</item>
+        <item>Clothes</item>
+        <item>Electronics</item>
+        <item>Books</item>
+        <item>Miscellaneous</item>
+        <!--Delete later-->
+        <item>Camping</item>
     </string-array>
 
 </resources>

@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 
 app.use(bodyParser.json());
 
-Genre = require('./models/genre');
+Category = require('./models/category');
 Item = require('./models/item');
 
 //Connect to Mongoose
@@ -24,21 +24,21 @@ mongoose.connect(process.env.MONGO_DB_URL,
 //mongoose.connect('mongodb://localhost/bookstore');
 var db = mongoose.connection;
 
-app.get('/', function(req,res){
+/*app.get('/', function(req,res){
 	res.send('Hello World! Please user /api/books or /api/genres');
-});
+});*/
 
-app.get('/api/genres',function(req,res){
+app.get('/api/categories',function(req,res){
 	console.log("reached the server");
-	Genre.getGenres(function(err,genres){
+	Category.getCategories(function(err,categories){
 		if(err){
 			throw err;
 		}
-		res.json(genres);
+		res.json(categories);
 	});
 });
 
-app.post('/api/genres',function(req,res){
+/*app.post('/api/categories',function(req,res){
 	var genre = req.body;
 	Genre.addGenre(genre,function(err,genre){
 		if(err){
@@ -68,7 +68,7 @@ app.delete('/api/genres/:_id',function(req,res){
 		}
 		res.json(genre);
 	});
-});
+});*/
 
 /*Item.find({}, function(err,items){
 	if (err) throw err;

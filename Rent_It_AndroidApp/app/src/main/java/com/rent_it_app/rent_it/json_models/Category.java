@@ -7,7 +7,9 @@ package com.rent_it_app.rent_it.json_models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Genre {
+import java.io.Serializable;
+
+public class Category implements Serializable {
 
     @SerializedName("_id")
     @Expose
@@ -15,9 +17,9 @@ public class Genre {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("created_date")
+    @SerializedName("image")
     @Expose
-    private String createdDate;
+    private String image;
 
     public String getId() {
         return id;
@@ -35,12 +37,12 @@ public class Genre {
         this.name = name;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public String getImage() {
+        return image;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setImage(String createdDate) {
+        this.image = createdDate;
     }
 
 }

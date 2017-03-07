@@ -1,5 +1,6 @@
 package com.rent_it_app.rent_it;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -65,6 +66,8 @@ public class HomeActivity extends BaseActivity
     Retrofit retrofit;
     CategoryEndpoint categoryEndpoint;
     Gson gson;
+    public static int bgresource;
+
 
 
     @Override
@@ -132,7 +135,10 @@ public class HomeActivity extends BaseActivity
                         @Override
                         public void onItemClick(AdapterView<?> arg0,
                                                 View arg1, int pos, long arg3) {
-                            //startActivity(new Intent(this, ChatActivity.class).putExtra(Config.EXTRA_DATA, cateList.get(pos)));
+                            //startActivity(new Intent(this, BrowseActivity.class).putExtra(Config.EXTRA_DATA, cateList.get(pos)));
+                            Intent myIntent = new Intent(HomeActivity.this, BrowseActivity.class);
+                            myIntent.putExtra(Config.EXTRA_DATA, cateList.get(pos));
+                            HomeActivity.this.startActivity(myIntent);
                         }
                     });
 
@@ -214,6 +220,37 @@ public class HomeActivity extends BaseActivity
             Category c = getItem(pos);
             TextView lbl = (TextView) v;
             lbl.setText(c.getName());
+
+            String picture = c.getImage();
+
+
+            if(picture.equals("vehicles")) {
+                bgresource = R.drawable.vehicles;
+            } else if(picture.equals("sports")) {
+                bgresource = R.drawable.sports;
+            } else if(picture.equals("outdoor")) {
+                bgresource = R.drawable.outdoor;
+            } else if(picture.equals("party")) {
+                bgresource = R.drawable.party;
+            } else if(picture.equals("garden")) {
+                bgresource = R.drawable.garden;
+            } else if(picture.equals("tools")) {
+                bgresource = R.drawable.tools;
+            } else if(picture.equals("clothes")) {
+                bgresource = R.drawable.clothes;
+            } else if(picture.equals("electronics")) {
+                bgresource = R.drawable.electronics;
+            } else if(picture.equals("books")) {
+                bgresource = R.drawable.books;
+            } else if(picture.equals("miscellaneous")) {
+                bgresource = R.drawable.miscellaneous;
+            } else if(picture.equals("camping")) {
+                bgresource = R.drawable.camping;
+            } else{
+                bgresource = R.drawable.bg;
+            }
+
+            lbl.setBackgroundResource(bgresource);
 
             return v;
         }

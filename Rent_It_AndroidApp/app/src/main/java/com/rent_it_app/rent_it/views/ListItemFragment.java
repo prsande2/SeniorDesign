@@ -146,6 +146,7 @@ public class ListItemFragment extends Fragment {
         txtCity = (EditText)view.findViewById(R.id.city);
         txtTags = (EditText)view.findViewById(R.id.tags);
         txtValue = (EditText)view.findViewById(R.id.value);
+        //edit.setFilters(new InputFilter[] { filter });
         txtValue.setFilters(new InputFilter[] {
                 //https://gist.github.com/gaara87/3607765
                 new DigitsKeyListener(Boolean.FALSE, Boolean.TRUE) {

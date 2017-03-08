@@ -53,8 +53,9 @@
     <string name="item_visibility">Visibility</string>
 
     <!--Category-->
-    <string name="category_prompt">Choose a category</string>
+    <string name="category_prompt">Choose a Category</string>
     <string-array name="category_array">
+        <item>Choose a Category</item>
         <item>Vehicles and Equipment</item>
         <item>Sports</item>
         <item>Outdoor Gear</item>
@@ -65,8 +66,6 @@
         <item>Electronics</item>
         <item>Books</item>
         <item>Miscellaneous</item>
-        <!--Delete later-->
-        <item>Camping</item>
     </string-array>
 
 </resources>

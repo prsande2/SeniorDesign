@@ -28,6 +28,7 @@ var db = mongoose.connection;
 	res.send('Hello World! Please user /api/books or /api/genres');
 });*/
 
+//get all
 app.get('/api/categories',function(req,res){
 	console.log("reached the server");
 	Category.getCategories(function(err,categories){
@@ -38,6 +39,7 @@ app.get('/api/categories',function(req,res){
 	});
 });
 
+
 /*app.post('/api/categories',function(req,res){
 	var genre = req.body;
 	Genre.addGenre(genre,function(err,genre){
@@ -46,20 +48,20 @@ app.get('/api/categories',function(req,res){
 		}
 		res.json(genre);
 	});
-});
+});*/
 
-app.put('/api/genres/:_id',function(req,res){
+/*app.put('/api/categories/:_id',function(req,res){
 	var id = req.params._id;
-	var genre = req.body;
-	Genre.updateGenre(id, genre, {}, function(err,genre){
+	var category = req.body;
+	Category.updateCategory(id, category, {}, function(err,category){
 		if(err){
 			throw err;
 		}
-		res.json(genre);
+		res.json(category);
 	});
-});
+});*/
 
-app.delete('/api/genres/:_id',function(req,res){
+/*app.delete('/api/genres/:_id',function(req,res){
 	var id = req.params._id;
 	var genre = req.body;
 	Genre.removeGenre(id, function(err,genre){
@@ -87,14 +89,23 @@ app.get('/api/items',function(req,res){
 });
 //get item by id
 app.get('/api/items/:_id',function(req,res){
-	Item.getItemById(req.params._id,function(err,item){
+	Item.getItemById(req.params._id,function(err,items){
 		if(err){
 			throw err;
 		}
-		res.json(item);
+		res.json(items);
 	})
 });
-//get my items by uid
+//get item by category
+app.get('/api/items/category/:category',function(req,res){
+	Item.getItemsByCategoryId(req.params.category,function(err,items){
+		if(err){
+			throw err;
+		}
+		res.json(items);
+	})
+});
+//get one item by uid
 app.get('/api/items/user/:uid',function(req,res){
 	Item.getItemsByUid(req.params.uid,function(err,items){
 		if(err){

@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by Miz on 2/1/17.
@@ -21,6 +22,9 @@ public interface ItemEndpoint {
     Call<List<Item>> getItems(*//*@Path("uid") String uid*//*);*/
     @GET("api/items")
     Call<ArrayList<Item>> getItems(/*@Path("uid") String uid*/);
+
+    @GET("api/items/category/{category}")
+    Call<ArrayList<Item>> getItemsByCategory(@Path("category") String category);
 
     /*@GET("group/{id}/users")
     Call<List<User>> groupList(@Path("id") int groupId, @Query("sort") String sort);*/

@@ -17,6 +17,7 @@ module.exports.getCategories = function(callback, limit){
 	Category.find(callback).limit(limit);
 }
 
+
 //Add Category
 /*module.exports.addCategory = function(category, callback){
 	Category.create(category, callback);

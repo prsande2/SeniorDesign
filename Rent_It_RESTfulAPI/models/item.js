@@ -59,14 +59,24 @@ module.exports.getItems = function(callback, limit){
 	Item.find(callback).limit(limit);
 }
 
-//Get Items by Id
+//Get Item by Id
 module.exports.getItemById = function(id, callback){
 	Item.findById(id, callback);
 }
 
-//Get My Item with uid
+//Get Item by Category Name
+module.exports.getItemsByCategoryId = function(category, callback){
+	Item.find()
+		.where('category').equals(category)
+		.exec(callback);
+}
+
+//Get one Item with uid
 module.exports.getItemsByUid = function(uid, callback){
-	Item.findOne({'uid': uid}, callback);
+	Item.find()
+		.where('uid').equals(uid)
+		.exec(callback);
+	//Item.findOne({'uid': uid}, callback);
 	//Item.where('uid', uid).findOne(callback);
 }
 

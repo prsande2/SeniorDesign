@@ -87,8 +87,8 @@ public class BrowseActivity extends BaseActivity{
                     public void onItemClick(AdapterView<?> arg0,
                                             View arg1, int pos, long arg3) {
                         //startActivity(new Intent(this, EditItemActivity.class).putExtra(Config.EXTRA_DATA, brwsList.get(pos)));
-                        Intent myIntent = new Intent(BrowseActivity.this, BrowseActivity.class);
-                        myIntent.putExtra(Config.EXTRA_DATA, brwsList.get(pos));
+                        Intent myIntent = new Intent(BrowseActivity.this, ListingActivity.class);
+                        myIntent.putExtra(Config.MORE_DATA, brwsList.get(pos));
                         BrowseActivity.this.startActivity(myIntent);
                     }
                 });

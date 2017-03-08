@@ -95,6 +95,8 @@ public class EditItemActivity extends BaseActivity{
             spnCategory.setSelection(spinnerPosition);
         }
 
+        //for updating data
+
         gson = new Gson();
 
         retrofit = new Retrofit.Builder()

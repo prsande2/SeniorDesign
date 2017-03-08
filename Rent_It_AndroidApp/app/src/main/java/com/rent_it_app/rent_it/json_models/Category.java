@@ -4,10 +4,9 @@ package com.rent_it_app.rent_it.json_models;
  * Created by Miz on 2/1/17.
  */
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class Category implements Serializable {
 
@@ -41,8 +40,8 @@ public class Category implements Serializable {
         return image;
     }
 
-    public void setImage(String createdDate) {
-        this.image = createdDate;
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <!--Title-->
+            <!--<TextView
+                android:id="@+id/title"
+                android:textColor="@color/colorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Review"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp" />-->
+
+            <!--Item Rating-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent">
+                <TextView
+                    android:id="@+id/description1"
+                    android:textColor="@color/colorLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Item Satisfaction"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"/>
+
+                <RatingBar
+                    android:id="@+id/ratingBar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numStars="5"
+                    android:layout_marginLeft="10dp"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:stepSize="1.0"
+                    android:isIndicator="true"
+                    android:rating="2.0" />
+
+            </LinearLayout>
+
+            <!--Comment on Item-->
+            <TextView
+                android:id="@+id/condition"
+                android:textColor="@color/colorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comment on item"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_bg"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:lines="6"
+                android:scrollbars="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="#000" />
+
+            <!--Owner Rating-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:id="@+id/city"
+                    android:textColor="@color/colorLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Owner's Responsiveness"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="10dp"/>
+
+                <RatingBar
+                    android:id="@+id/ratingBar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numStars="5"
+                    android:layout_marginLeft="10dp"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:stepSize="1.0"
+                    android:isIndicator="true"
+                    android:rating="2.0" />
+
+            </LinearLayout>
+
+            <!--Daily Rate-->
+            <TextView
+                android:id="@+id/rate"
+                android:textColor="@color/colorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comment on Owner"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:id="@+id/description2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_bg"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:lines="5"
+                android:scrollbars="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="5dp"/>
+
+            <Button
+                android:id="@+id/contact_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Submit Review"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorAccent"
+                android:layout_gravity="center_horizontal"/>
+            <!--android:onClick=""-->
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

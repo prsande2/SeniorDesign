@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -140,12 +141,12 @@ public class BrowseActivity extends BaseActivity{
 
             Item c = getItem(pos);
 
-            TextView lbl = (TextView) v;
+            /*TextView lbl = (TextView) v;
+            lbl.setText(c.getTitle());*/
+            LinearLayout ll = (LinearLayout) v; // get the parent layout view
+            TextView lbl = (TextView) ll.findViewById(R.id.txtTitle); // get the child text view
             lbl.setText(c.getTitle());
 
-            /*lbl.setCompoundDrawablesWithIntrinsicBounds(
-                    c.isOnline() ? R.drawable.ic_online
-                            : R.drawable.ic_offline, 0, R.drawable.arrow, 0);*/
 
             return v;
         }

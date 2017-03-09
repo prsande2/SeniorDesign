@@ -144,9 +144,12 @@ public class BrowseActivity extends BaseActivity{
             /*TextView lbl = (TextView) v;
             lbl.setText(c.getTitle());*/
             LinearLayout ll = (LinearLayout) v; // get the parent layout view
-            TextView lbl = (TextView) ll.findViewById(R.id.txtTitle); // get the child text view
-            lbl.setText(c.getTitle());
-
+            TextView title = (TextView) ll.findViewById(R.id.txtTitle); // get the child text view
+            TextView city = (TextView) ll.findViewById(R.id.txtCity);
+            TextView rate = (TextView) ll.findViewById(R.id.txtRate);
+            title.setText(c.getTitle());
+            city.setText(c.getCity());
+            rate.setText("$" + c.getRate() + " /day");
 
             return v;
         }

@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_title"
+                android:textSize="22sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp" />
 
@@ -52,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_description"
+                android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -62,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_condition"
+                android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
@@ -72,18 +75,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_city"
+                android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
             <!--Daily Rate-->
             <TextView
                 android:id="@+id/rate"
-                android:textColor="@color/colorLabel"
+                android:textColor="#AA3939"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_rate"
+                android:textSize="20sp"
+                android:gravity="right"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"/>
+                android:paddingRight="15dp"/>
 
             <View
                 android:layout_width="fill_parent"
@@ -98,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Reviews"
+                android:textSize="18sp"
                 android:layout_marginLeft="10dp"/>
 
             <View
@@ -106,14 +113,77 @@
                 android:layout_margin="10dp"
                 android:background="#000" />
 
-            <!--Item Review-->
+            <!--Owner Info-->
             <TextView
                 android:id="@+id/label11"
                 android:textColor="@color/colorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Owner"
+                android:textSize="18sp"
                 android:layout_marginLeft="10dp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/ownerImage"
+                    android:layout_width="0dp"
+                    android:layout_weight=".20"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:src="@drawable/ic_account"
+                    android:padding="0dp"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight=".80">
+
+                    <TextView
+                        android:id="@+id/label12"
+                        android:textColor="@color/colorLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Owner Name"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="10dp"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent">
+
+                        <RatingBar
+                            android:id="@+id/ratingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:numStars="5"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:stepSize="1.0"
+                            android:isIndicator="true"
+                            android:rating="2.0" />
+
+                        <Button
+                            android:id="@+id/ownerReview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Read Owner's Review"
+                            android:background="@color/colorAccent"
+                            android:layout_gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/contact_button"

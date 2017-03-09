@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingRight="15dp"
-                android:text="Troy"
+                android:text="City"
                 android:gravity="right"
                 android:textColor="#3b3b3b"
                 android:textSize="18sp" />
@@ -94,7 +94,7 @@
                 android:layout_weight=".60"
                 android:layout_height="wrap_content"
                 android:paddingRight="15dp"
-                android:text="$4.50 /day"
+                android:text="Daily Rate"
                 android:gravity="right"
                 android:textColor="#AA3939"
                 android:textSize="23sp" />

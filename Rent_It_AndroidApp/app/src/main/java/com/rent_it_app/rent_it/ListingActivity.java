@@ -47,10 +47,10 @@ public class ListingActivity extends BaseActivity{
         //populate fields
         txtTitle.setText(myItem.getTitle());
         txtDescription.setText(myItem.getDescription());
-        txtCity.setText(myItem.getCity());
-        txtCondition.setText(myItem.getCondition());
-        Log.d("rate:"," "+myItem.getRate());
-        txtRate.setText("$" + String.format("%.2f", myItem.getRate()));
+        txtCity.setText("Location : " + myItem.getCity());
+        txtCondition.setText("Condition : " + myItem.getCondition());
+        txtRate.setText("$" + myItem.getRate() + " /day");
+        //txtRate.setText("$" + String.format("%.2f", myItem.getRate()));
 
     }
 

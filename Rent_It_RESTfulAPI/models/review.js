@@ -38,9 +38,16 @@ module.exports.getReviews = function(callback, limit){
 	Review.find(callback).limit(limit);
 }
 
+//Get a latest Review
+module.exports.getLatestReviewByItemId = function(item, callback){
+	Review.findOne({'item': item})
+		.sort({date_created: -1})
+		.exec(callback);
+}
+
 //Get Reviews by Item Id
 module.exports.getReviewsByItemId = function(item, callback){
-	Reviews.find()
+	Review.find()
 		.where('item').equals(item)
 		.exec(callback);
 }

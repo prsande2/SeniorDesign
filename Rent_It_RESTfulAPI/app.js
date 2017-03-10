@@ -160,6 +160,16 @@ app.get('/api/reviews',function(req,res){
 	});
 });
 
+//get latest review by item id
+app.get('/api/review/item/:item',function(req,res){
+	Review.getLatestReviewByItemId(req.params.item,function(err,review){
+		if(err){
+			throw err;
+		}
+		res.json(review);
+	})
+});
+
 //get review by item id
 app.get('/api/reviews/item/:item',function(req,res){
 	Review.getReviewsByItemId(req.params.item,function(err,reviews){

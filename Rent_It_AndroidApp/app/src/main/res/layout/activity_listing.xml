@@ -145,7 +145,7 @@
                 android:layout_marginLeft="10dp"/>
 
             <TextView
-                android:id="@+id/label19"
+                android:id="@+id/rTitle"
                 android:textColor="@color/colorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
             android:layout_width="match_parent">
 
                 <RatingBar
-                android:id="@+id/ratingBar9"
+                android:id="@+id/rRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
@@ -170,7 +170,7 @@
                 android:rating="2.0" />
 
                 <TextView
-                android:id="@+id/label20"
+                android:id="@+id/rReviewer"
                 android:textColor="@color/colorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
         </LinearLayout>
 
             <TextView
-                android:id="@+id/label21"
+                android:id="@+id/rComment"
                 android:textColor="@color/colorLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                 android:layout_marginLeft="10dp"/>
 
             <Button
-                android:id="@+id/ownerReview2"
+                android:id="@+id/readMoreButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Read More Reviews"

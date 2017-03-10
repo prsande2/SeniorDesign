@@ -166,6 +166,13 @@ app.get('/api/review/item/:item',function(req,res){
 		if(err){
 			throw err;
 		}
+		if(!review){
+			//(review == null) works too
+			console.log("review is null 1");
+			review =[];
+			console.log("review is now " + review);
+		}
+	
 		res.json(review);
 	})
 });
@@ -176,6 +183,8 @@ app.get('/api/reviews/item/:item',function(req,res){
 		if(err){
 			throw err;
 		}
+
+			console.log("review is  " + reviews);
 		res.json(reviews);
 	})
 });

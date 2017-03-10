@@ -1,12 +1,16 @@
 package com.rent_it_app.rent_it;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -39,11 +43,17 @@ public class ListingActivity extends BaseActivity{
     Gson gson;
     private TextView txtTitle, txtDescription, txtCondition, txtCity, txtRate;
     private TextView rTitle, rReviewer, rComment;
+    private Button readMore;
+    private RatingBar itemRating;
+    private ProgressDialog progress;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
+
+        final ProgressDialog dia = ProgressDialog.show(this, null, "Loading...");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,7 +70,11 @@ public class ListingActivity extends BaseActivity{
         rTitle = (TextView)findViewById(R.id.rTitle);
         rReviewer = (TextView)findViewById(R.id.rReviewer);
         rComment = (TextView)findViewById(R.id.rComment);
+        readMore = (Button)findViewById(R.id.readMoreButton);
+        itemRating = (RatingBar) findViewById(R.id.rRating);
+        //progress = ProgressDialog.show(this, "dialog title","dialog message", true);
 
+        //progress.show();
         //populate fields
         txtTitle.setText(myItem.getTitle());
         txtDescription.setText(myItem.getDescription());
@@ -80,6 +94,7 @@ public class ListingActivity extends BaseActivity{
         reviewEndpoint = retrofit.create(ReviewEndpoint.class);
         //rList = new ArrayList<Review>();
 
+
         Call<Review> call = reviewEndpoint.getLatestReviewByItemId(itemId);
         //Call<ArrayList<Review>> call = reviewEndpoint.getLatestReviewByItemId(itemId);
         call.enqueue(new Callback<Review>() {
@@ -87,18 +102,52 @@ public class ListingActivity extends BaseActivity{
             public void onResponse(Call<Review> call, Response<Review> response) {
                 int statusCode = response.code();
                 rList = response.body();
-                rTitle.setText(rList.getTitle());
-                rReviewer.setText("by " + rList.getReviewer());
-                rComment.setText(rList.getItemComment());
 
+                    Log.d("response ",""+response);
+                Log.d("response.body() ",""+response.body());
+                Log.d("rList ",""+rList);
+                Log.d("response.raw()",""+response.raw());
+                Log.d("response.toString() ",""+response.toString());
+
+                //Log.d("nullCheck",rList.toString());
+                    rTitle.setText(rList.getTitle());
+                    itemRating.setRating(rList.getItemRating());
+                    Log.d("getItemRating() ","" + rList.getItemRating());
+                    //rReviewer.setText("by " + rList.getReviewer());
+                    //till we create user model
+                    rReviewer.setText("by James L");
+                    String s = rList.getItemComment();
+                    if (s.length() > 100) {
+                        s = s.substring(0, 100) + "...";
+                    }
+                    rComment.setText(s);
                 Log.d("retrofit.call.enqueue", ""+statusCode);
+                mHandler.postDelayed(new Runnable() {
+                    public void run() {
+                        dia.dismiss();
+                    }
+                }, 1000);
             }
 
             @Override
             public void onFailure(Call<Review> call, Throwable t) {
+                rComment.setText("No review available");
+                readMore.setVisibility(View.GONE);
+                rTitle.setVisibility(View.GONE);
+                rReviewer.setVisibility(View.GONE);
+                itemRating.setVisibility(View.GONE);
+
                 Log.d("retrofit.call.enqueue", "failed "+t);
+                mHandler.postDelayed(new Runnable() {
+                    public void run() {
+                        dia.dismiss();
+                    }
+                }, 1000);
             }
+
         });
+
+        //progress.dismiss();
 
     }
 

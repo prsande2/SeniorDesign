@@ -27,6 +27,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:paddingLeft="10dp"
+            android:layout_marginTop="3dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
@@ -36,9 +37,10 @@
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 style="?android:attr/ratingBarStyleSmall"
-                android:stepSize="1.0"
+                android:stepSize="0.1"
+                android:layout_marginTop="2dp"
                 android:isIndicator="true"
-                android:rating="2.0" />
+                android:rating="4.5" />
 
             <TextView
                 android:id="@+id/txtCity"

@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
                 android:src="@drawable/preview"
-                android:padding="0dp"/>
+                android:padding="0dp"/>-->
 
             <!--Title-->
             <TextView
@@ -45,6 +45,35 @@
                 android:textSize="22sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp" />
+
+            <!--Item Rating-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <RatingBar
+                    android:id="@+id/ratingBar6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:layout_marginLeft="10dp"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:stepSize="1.0"
+                    android:isIndicator="true"
+                    android:rating="2.0" />
+
+                <TextView
+                    android:id="@+id/label17"
+                    android:textColor="@color/colorLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(3)"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="10dp"/>
+
+
+            </LinearLayout>
 
             <!--Description-->
             <TextView
@@ -68,34 +97,41 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
-            <!--City-->
-            <TextView
-                android:id="@+id/city"
-                android:textColor="@color/colorLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/item_city"
-                android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
 
-            <!--Daily Rate-->
-            <TextView
-                android:id="@+id/rate"
-                android:textColor="#AA3939"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/item_rate"
-                android:textSize="20sp"
-                android:gravity="right"
-                android:layout_marginTop="10dp"
-                android:paddingRight="15dp"/>
+                <!--City-->
+                <TextView
+                    android:id="@+id/city"
+                    android:textColor="@color/colorLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/item_city"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <!--Daily Rate-->
+                <TextView
+                    android:id="@+id/rate"
+                    android:textColor="#AA3939"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/item_rate"
+                    android:textSize="20sp"
+                    android:gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:paddingRight="15dp"/>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_margin="10dp"
-                android:background="#000" />
+                android:background="@color/colorPrimaryDark" />
 
             <!--Item Review-->
             <TextView
@@ -105,13 +141,72 @@
                 android:layout_height="wrap_content"
                 android:text="Reviews"
                 android:textSize="18sp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/label19"
+                android:textColor="@color/colorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Review Title"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+                <RatingBar
+                android:id="@+id/ratingBar9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:layout_marginLeft="10dp"
+                style="?android:attr/ratingBarStyleSmall"
+                android:stepSize="1.0"
+                android:isIndicator="true"
+                android:rating="2.0" />
+
+                <TextView
+                android:id="@+id/label20"
+                android:textColor="@color/colorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="by reviewer"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/label21"
+                android:textColor="@color/colorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="description ..."
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"/>
+
+            <Button
+                android:id="@+id/ownerReview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read More Reviews"
+                android:textColor="#AA3939"
+                android:textSize="16sp"
+                android:background="@null"
+                android:padding="0dp"/>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="#000" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/colorPrimaryDark" />
 
             <!--Owner Info-->
             <TextView
@@ -166,7 +261,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:numStars="5"
-
                             android:layout_marginLeft="10dp"
                             style="?android:attr/ratingBarStyleSmall"
                             android:stepSize="1.0"
@@ -189,10 +283,10 @@
                             android:id="@+id/ownerReview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Read All Reviews"
+                            android:text="Read Owner Reviews"
                             android:textColor="#AA3939"
                             android:textSize="16sp"
-                            android:background="@color/windowBackground"
+                            android:background="@null"
                             android:layout_marginLeft="10dp"
                             android:padding="0dp"/>
 

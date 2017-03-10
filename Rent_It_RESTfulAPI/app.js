@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 Category = require('./models/category');
 Item = require('./models/item');
+Review = require('./models/review');
 
 //Connect to Mongoose
 var connection_options = {
@@ -137,7 +138,7 @@ app.put('/api/books/:_id',function(req,res){
 });
 */
 //Delete Item
-app.delete('/api/items/:_id',function(req,res){
+/*app.delete('/api/items/:_id',function(req,res){
 	var id = req.params._id;
 	var item = req.body;
 	Item.removeItem(id, function(err,item){
@@ -146,6 +147,27 @@ app.delete('/api/items/:_id',function(req,res){
 		}
 		res.json(item);
 	});
+});*/
+
+//get all reviews
+app.get('/api/reviews',function(req,res){
+	console.log("reached the server");
+	Review.getReviews(function(err, reviews){
+		if(err){
+			throw err;
+		}
+		res.json(reviews);
+	});
+});
+
+//get review by item id
+app.get('/api/reviews/item/:item',function(req,res){
+	Review.getReviewsByItemId(req.params.item,function(err,reviews){
+		if(err){
+			throw err;
+		}
+		res.json(reviews);
+	})
 });
 
 app.listen(process.env.PORT_NO);

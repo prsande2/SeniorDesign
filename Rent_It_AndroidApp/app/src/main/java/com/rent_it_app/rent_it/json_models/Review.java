@@ -17,19 +17,31 @@ public class Review implements Serializable
     @SerializedName("item")
     @Expose
     private String item;
+    @SerializedName("owner")
+    @Expose
+    private String owner;
+    @SerializedName("item_rating")
+    @Expose
+    private Integer itemRating;
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("comment")
+    @SerializedName("item_comment")
     @Expose
-    private String comment;
-    @SerializedName("rating")
+    private String itemComment;
+    @SerializedName("owner_rating")
     @Expose
-    private Double rating;
-    @SerializedName("author")
+    private Integer ownerRating;
+    @SerializedName("owner_comment")
     @Expose
-    private String author;
-    private final static long serialVersionUID = -8583743193637410536L;
+    private String ownerComment;
+    @SerializedName("reviewer")
+    @Expose
+    private String reviewer;
+    @SerializedName("date_created")
+    @Expose
+    private String dateCreated;
+    private final static long serialVersionUID = 4583357801905039521L;
 
     /**
      * No args constructor for use in serialization
@@ -41,20 +53,28 @@ public class Review implements Serializable
     /**
      *
      * @param id
-     * @param author
      * @param title
      * @param item
-     * @param rating
-     * @param comment
+     * @param owner
+     * @param dateCreated
+     * @param ownerComment
+     * @param reviewer
+     * @param ownerRating
+     * @param itemComment
+     * @param itemRating
      */
-    public Review(String id, String item, String title, String comment, Double rating, String author) {
+    public Review(String id, String item, String owner, Integer itemRating, String title, String itemComment, Integer ownerRating, String ownerComment, String reviewer, String dateCreated) {
         super();
         this.id = id;
         this.item = item;
+        this.owner = owner;
+        this.itemRating = itemRating;
         this.title = title;
-        this.comment = comment;
-        this.rating = rating;
-        this.author = author;
+        this.itemComment = itemComment;
+        this.ownerRating = ownerRating;
+        this.ownerComment = ownerComment;
+        this.reviewer = reviewer;
+        this.dateCreated = dateCreated;
     }
 
     public String getId() {
@@ -73,6 +93,22 @@ public class Review implements Serializable
         this.item = item;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public Integer getItemRating() {
+        return itemRating;
+    }
+
+    public void setItemRating(Integer itemRating) {
+        this.itemRating = itemRating;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -81,28 +117,44 @@ public class Review implements Serializable
         this.title = title;
     }
 
-    public String getComment() {
-        return comment;
+    public String getItemComment() {
+        return itemComment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setItemComment(String itemComment) {
+        this.itemComment = itemComment;
     }
 
-    public Double getRating() {
-        return rating;
+    public Integer getOwnerRating() {
+        return ownerRating;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setOwnerRating(Integer ownerRating) {
+        this.ownerRating = ownerRating;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getOwnerComment() {
+        return ownerComment;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setOwnerComment(String ownerComment) {
+        this.ownerComment = ownerComment;
+    }
+
+    public String getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(String reviewer) {
+        this.reviewer = reviewer;
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
 }

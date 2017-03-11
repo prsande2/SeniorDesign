@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -15,7 +16,10 @@ import com.rent_it_app.rent_it.json_models.Item;
 import com.rent_it_app.rent_it.json_models.Review;
 import com.rent_it_app.rent_it.json_models.ReviewEndpoint;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +37,7 @@ public class ShowItemReviewsActivity extends BaseActivity{
     ReviewEndpoint reviewEndpoint;
     Gson gson;
     private ArrayList<Review> rvwList;
-    private ListView blist;
+    private ListView irlist;
     private String itemId;
 
     @Override
@@ -47,6 +51,8 @@ public class ShowItemReviewsActivity extends BaseActivity{
 
         itemId = (String) getIntent().getSerializableExtra("ITEM_ID");
         Log.d("item id","item id: "+ itemId);
+
+        irlist = (ListView) findViewById(R.id.browselist);
 
         gson = new Gson();
         retrofit = new Retrofit.Builder()
@@ -62,7 +68,7 @@ public class ShowItemReviewsActivity extends BaseActivity{
             public void onResponse(Call<ArrayList<Review>> call, Response<ArrayList<Review>> response) {
                 int statusCode = response.code();
                 rvwList = response.body();
-                blist.setAdapter(new ItemReviewAdapter());
+                irlist.setAdapter(new ItemReviewAdapter());
 
 
             }
@@ -114,15 +120,22 @@ public class ShowItemReviewsActivity extends BaseActivity{
 
             Review c = getItem(pos);
 
-            /*TextView lbl = (TextView) v;
-            lbl.setText(c.getTitle());*/
+
             LinearLayout ll = (LinearLayout) v; // get the parent layout view
-            TextView title = (TextView) ll.findViewById(R.id.txtTitle); // get the child text view
-            TextView city = (TextView) ll.findViewById(R.id.txtCity);
-            TextView rate = (TextView) ll.findViewById(R.id.txtRate);
+            TextView title = (TextView) ll.findViewById(R.id.rTitle); // get the child text view
+            TextView reviewer = (TextView)ll.findViewById(R.id.rReviewer);
+            TextView date = (TextView)ll.findViewById(R.id.rDate);
+            TextView comment = (TextView)ll.findViewById(R.id.rComment);
+            RatingBar itemRating = (RatingBar) ll.findViewById(R.id.rRating);
             title.setText(c.getTitle());
-            /*city.setText(c.getCity());
-            rate.setText("$" + c.getRate() + " /day");*/
+            //Log.d("reviewer ",""+c.getReviewer());
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            String hiDate = c.getDateCreated();
+            Date myDate = df.parse(hiDate);
+            date.setText(c.getDateCreated());
+            reviewer.setText("by " + c.getReviewer());
+            comment.setText(c.getItemComment());
+            itemRating.setRating(c.getItemRating());
 
             return v;
         }

@@ -28,31 +28,33 @@
             android:layout_height="wrap_content"
             android:numStars="5"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             style="?android:attr/ratingBarStyleSmall"
             android:stepSize="1.0"
             android:isIndicator="true"
             android:rating="5" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/rDate"
             android:textColor="@color/colorLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="date"
             android:textSize="18sp"
+            android:layout_marginLeft="10dp"/>-->
+
+        <TextView
+            android:id="@+id/rReviewer"
+            android:textColor="@color/colorLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="by reviewer"
+            android:textSize="18sp"
             android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/rReviewer"
-        android:textColor="@color/colorLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="by reviewer"
-        android:textSize="18sp"
-        android:layout_marginLeft="10dp"/>
+
 
     <TextView
         android:id="@+id/rComment"
@@ -61,6 +63,18 @@
         android:layout_height="wrap_content"
         android:text="description ..."
         android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/rDate"
+        android:textColor="@color/colorLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="date"
+        android:textSize="18sp"
+
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"/>
 
 </LinearLayout>

@@ -2,20 +2,35 @@ package com.rent_it_app.rent_it;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.google.gson.Gson;
 import com.rent_it_app.rent_it.firebase.Config;
 import com.rent_it_app.rent_it.json_models.Item;
 import com.rent_it_app.rent_it.json_models.Review;
 import com.rent_it_app.rent_it.json_models.ReviewEndpoint;
+
+import java.io.File;
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,11 +55,33 @@ public class ListingActivity extends BaseActivity{
     private RatingBar itemRating;
     private ProgressDialog progress;
     private Handler mHandler = new Handler();
+    private ImageView myPhoto;
+
+    private CognitoCachingCredentialsProvider credentialsProvider;
+    private CognitoSyncManager syncClient;
+    private AmazonS3 s3;
+    private TransferUtility transferUtility;
+    private File imageFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
+
+        credentialsProvider = new CognitoCachingCredentialsProvider(
+                getApplicationContext(),  // getApplicationContext(),
+                Constants.COGNITO_POOL_ID, // Identity Pool ID
+                Regions.US_WEST_2 // Region
+        );
+
+        // Initialize the Cognito Sync client
+        syncClient = new CognitoSyncManager(
+                getApplicationContext(),
+                Regions.US_WEST_2, // Region
+                credentialsProvider);
+
+        s3 = new AmazonS3Client(credentialsProvider);
+        transferUtility = new TransferUtility(s3, getApplicationContext());
 
         final ProgressDialog dia = ProgressDialog.show(this, null, "Loading...");
 
@@ -65,6 +102,7 @@ public class ListingActivity extends BaseActivity{
         rComment = (TextView)findViewById(R.id.rComment);
         readMore = (Button)findViewById(R.id.readMoreButton);
         itemRating = (RatingBar) findViewById(R.id.rRating);
+        myPhoto = (ImageView) findViewById(R.id.photo);
         //progress = ProgressDialog.show(this, "dialog title","dialog message", true);
 
         //progress.show();
@@ -75,6 +113,35 @@ public class ListingActivity extends BaseActivity{
         txtCondition.setText("Condition : " + myItem.getCondition());
         txtRate.setText("$" + myItem.getRate() + " /day");
         //txtRate.setText("$" + String.format("%.2f", myItem.getRate()));
+        File outputDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
+        try {
+            imageFile = File.createTempFile(myItem.getImage(), "", outputDir);
+            imageFile.deleteOnExit();
+            TransferObserver transferObserver =
+                    transferUtility.download(Constants.BUCKET_NAME, myItem.getImage(), imageFile);
+            transferObserver.setTransferListener(new TransferListener() {
+                @Override
+                public void onStateChanged(int id, TransferState state) {
+                    if(state == TransferState.COMPLETED) {
+                        //myPhoto.setImageResource(R.drawable.bg);
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                        myPhoto.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 900, 600, false));
+                    }
+                }
+
+                public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+                    // Do something in the callback.
+                }
+
+                public void onError(int id, Exception e) {
+                    // Do something in the callback.
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         String itemId = myItem.getId();
 

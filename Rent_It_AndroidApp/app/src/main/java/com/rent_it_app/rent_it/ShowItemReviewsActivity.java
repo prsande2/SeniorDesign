@@ -12,11 +12,16 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.Streams;
 import com.rent_it_app.rent_it.json_models.Item;
 import com.rent_it_app.rent_it.json_models.Review;
 import com.rent_it_app.rent_it.json_models.ReviewEndpoint;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +44,8 @@ public class ShowItemReviewsActivity extends BaseActivity{
     private ArrayList<Review> rvwList;
     private ListView irlist;
     private String itemId;
+    public static String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS zzz";
+    private static final SimpleDateFormat isoFormatter = new SimpleDateFormat(ISO_FORMAT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +136,17 @@ public class ShowItemReviewsActivity extends BaseActivity{
             RatingBar itemRating = (RatingBar) ll.findViewById(R.id.rRating);
             title.setText(c.getTitle());
             //Log.d("reviewer ",""+c.getReviewer());
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            String hiDate = c.getDateCreated();
-            Date myDate = df.parse(hiDate);
-            date.setText(c.getDateCreated());
-            reviewer.setText("by " + c.getReviewer());
+            //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS zzz");
+
+            //SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+            //Date formattedDate = df.parse(c.getDateCreated());
+            //String hiDate = c.getDateCreated();
+
+            DateTime dateTimeObj = ISODateTimeFormat.dateTime().parseDateTime(c.getDateCreated());
+            Log.d("jodatime.ISODateTime: ", dateTimeObj.toString());
+            date.setText("Submitted: "+ dateTimeObj.toString( "dd/MM/yy"));
+            String s = c.getReviewer().substring(0, 15) + "...";
+            reviewer.setText("by " + s);
             comment.setText(c.getItemComment());
             itemRating.setRating(c.getItemRating());
 

@@ -7,22 +7,15 @@ import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rent_it_app.rent_it.firebase.Config;
 import com.rent_it_app.rent_it.json_models.Item;
-import com.rent_it_app.rent_it.json_models.ItemEndpoint;
 import com.rent_it_app.rent_it.json_models.Review;
 import com.rent_it_app.rent_it.json_models.ReviewEndpoint;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,7 +100,7 @@ public class ListingActivity extends BaseActivity{
                 Log.d("response.body() ",""+response.body());
                 Log.d("rList ",""+rList);
                 Log.d("response.raw()",""+response.raw());
-                Log.d("response.toString() ",""+response.toString());
+                Log.d("response.toString() ",""+response);
 
                 //Log.d("nullCheck",rList.toString());
                     rTitle.setText(rList.getTitle());
@@ -148,7 +141,18 @@ public class ListingActivity extends BaseActivity{
         });
 
         //progress.dismiss();
+        readMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //myFancyMethod(v);
+                Intent myIntent = new Intent(ListingActivity.this, ShowItemReviewsActivity.class);
+                myIntent.putExtra("ITEM_ID", rList.getItem());
+                ListingActivity.this.startActivity(myIntent);
+            }
+        });
 
     }
+
+
 
 }

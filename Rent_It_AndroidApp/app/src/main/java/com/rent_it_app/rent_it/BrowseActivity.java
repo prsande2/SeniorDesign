@@ -75,10 +75,6 @@ public class BrowseActivity extends BaseActivity{
                 int statusCode = response.code();
                 //List<Item> items = response.body();
                 brwsList = response.body();
-                /*StringBuilder sb = new StringBuilder();
-                for (Item i: items){
-                    sb.append(i.getTitle() + ",");
-                }*/
 
                 //tv1.setText(sb.toString());
                 blist.setAdapter(new BrowseAdapter());

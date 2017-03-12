@@ -21,28 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".testing.MainActivity">
-         <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".ResetPasswordActivity"></activity>
-        <activity android:name=".ChatActivity" android:theme="@style/MyMaterialTheme"></activity>
-        <activity android:name=".testing.TestActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".BrowseActivity"></activity>
+        <activity android:name=".ListingActivity"></activity>
+        <activity android:name=".EditItemActivity"></activity>
+        <activity android:name=".ShowItemReviewsActivity"></activity>
         <activity android:name=".testing.NotificationActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity android:name=".testing.MsgActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -57,12 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
-        <activity android:name=".testing.ImageActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true"

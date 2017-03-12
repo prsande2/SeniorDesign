@@ -22,6 +22,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    // JodaTime to parse datetimes
+    compile 'net.danlew:android.joda:2.9.7'
+
     //in order to use android.support.design.widget.TextInputLayout added
     //compile 'com.jakewharton:butterknife:7.0.1'
     

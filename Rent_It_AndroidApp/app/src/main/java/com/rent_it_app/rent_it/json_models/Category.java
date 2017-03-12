@@ -4,10 +4,11 @@ package com.rent_it_app.rent_it.json_models;
  * Created by Miz on 2/1/17.
  */
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Genre {
+public class Category implements Serializable {
 
     @SerializedName("_id")
     @Expose
@@ -15,9 +16,9 @@ public class Genre {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("created_date")
+    @SerializedName("image")
     @Expose
-    private String createdDate;
+    private String image;
 
     public String getId() {
         return id;
@@ -35,12 +36,12 @@ public class Genre {
         this.name = name;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public String getImage() {
+        return image;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

@@ -79,7 +79,7 @@ public class ListItemFragment extends Fragment {
 
     Retrofit retrofit;
     ItemEndpoint itemEndpoint;
-    private EditText txtTitle, txtDescription, txtCondition, txtCategory, txtZipcode;
+    private EditText txtTitle, txtDescription, txtCondition, txtZipcode;
     private EditText txtTags, txtValue, txtRate, txtCity;
     private String myTitle, myDescription, myCondition, myCategory, myZipcode, myTags, myValue, myRate, myCity;
     private TextView myStatusText;
@@ -146,6 +146,7 @@ public class ListItemFragment extends Fragment {
         txtCity = (EditText)view.findViewById(R.id.city);
         txtTags = (EditText)view.findViewById(R.id.tags);
         txtValue = (EditText)view.findViewById(R.id.value);
+        //edit.setFilters(new InputFilter[] { filter });
         txtValue.setFilters(new InputFilter[] {
                 //https://gist.github.com/gaara87/3607765
                 new DigitsKeyListener(Boolean.FALSE, Boolean.TRUE) {
@@ -219,6 +220,7 @@ public class ListItemFragment extends Fragment {
                 getActivity(), R.array.category_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter);
+        //spinner1.setPrompt("Choose a Category");
 
 
         //getuid
@@ -242,6 +244,8 @@ public class ListItemFragment extends Fragment {
                 myValue = txtValue.getText().toString();
                 myRate= txtRate.getText().toString();
 
+
+
                 //Log.d("Category","category is: "+myCategory);
                 if (myTitle.trim().equals("")) {
                     txtTitle.requestFocus();
@@ -254,10 +258,6 @@ public class ListItemFragment extends Fragment {
                 }else if (myCondition.trim().equals("")) {
                     txtCondition.requestFocus();
                     txtCondition.setError("Condition is required!");
-
-                }else if (myCategory.trim().equals("")) {
-                    txtCategory.requestFocus();
-                    txtCategory.setError("Category is required!");
 
                 }else if (myCity.trim().equals("")) {
                     txtCity.requestFocus();
@@ -284,6 +284,44 @@ public class ListItemFragment extends Fragment {
                     //post Item
                     imgS3Name = UUID.randomUUID().toString() + ".jpg";
 
+                    //category name to category id
+                    switch (myCategory) {
+                        case "Vehicles and Equipment":
+                            myCategory = "58bd9baca8f8e676ea599e78";
+                            break;
+                        case "Sports":
+                            myCategory = "58bd9dbba8f8e676ea599f1c";
+                            break;
+                        case "Outdoor Gear":
+                            myCategory = "58bd9e1fa8f8e676ea599f3c";
+                            break;
+                        case "Party Supplies":
+                            myCategory = "58bda523a8f8e676ea59a0b1";
+                            break;
+                        case "Garden":
+                            myCategory = "58bda53aa8f8e676ea59a0bc";
+                            break;
+                        case "Tools":
+                            myCategory = "58bda560a8f8e676ea59a0d2";
+                            break;
+                        case "Clothes":
+                            myCategory = "58bda5a6a8f8e676ea59a0ec";
+                            break;
+                        case "Electronics":
+                            myCategory = "58bda5c8a8f8e676ea59a0f9";
+                            break;
+                        case "Books":
+                            myCategory = "58bda5e5a8f8e676ea59a103";
+                            break;
+                        case "Miscellaneous":
+                            myCategory = "58bda65ba8f8e676ea59a128";
+                            break;
+                        case "Choose a Category":
+                            //Miscellaneous
+                            myCategory = "58bda65ba8f8e676ea59a128";
+                            break;
+                    }
+
                     Item listing_item = new Item();
                     listing_item.setUid(userId);
                     listing_item.setTitle(myTitle);
@@ -296,6 +334,7 @@ public class ListItemFragment extends Fragment {
                     listing_item.setTags(tags);
                     listing_item.setValue(Double.parseDouble(myValue));
                     listing_item.setRate(Double.parseDouble(myRate));
+                    listing_item.setVisible(true);
 
                     if (photo_destination != null) {
                         listing_item.setImage(imgS3Name);

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -23,14 +24,26 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.rent_it_app.rent_it.firebase.Config;
+import com.rent_it_app.rent_it.json_models.Chat;
+import com.rent_it_app.rent_it.json_models.Conversation;
 import com.rent_it_app.rent_it.json_models.Item;
 import com.rent_it_app.rent_it.json_models.Review;
 import com.rent_it_app.rent_it.json_models.ReviewEndpoint;
 
+import org.joda.time.DateTime;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,7 +64,7 @@ public class ListingActivity extends BaseActivity{
     Gson gson;
     private TextView txtTitle, txtDescription, txtCondition, txtCity, txtRate;
     private TextView rTitle, rReviewer, rComment;
-    private Button readMore;
+    private Button readMore,startChat;
     private RatingBar itemRating;
     private ProgressDialog progress;
     private Handler mHandler = new Handler();
@@ -63,10 +76,16 @@ public class ListingActivity extends BaseActivity{
     private TransferUtility transferUtility;
     private File imageFile;
 
+    private FirebaseUser myUser;
+    private Conversation convo;
+    private String rental_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
+
+        myUser = FirebaseAuth.getInstance().getCurrentUser();
 
         credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),  // getApplicationContext(),
@@ -101,6 +120,7 @@ public class ListingActivity extends BaseActivity{
         rReviewer = (TextView)findViewById(R.id.rReviewer);
         rComment = (TextView)findViewById(R.id.rComment);
         readMore = (Button)findViewById(R.id.readMoreButton);
+        startChat = (Button) findViewById(R.id.contact_button);
         itemRating = (RatingBar) findViewById(R.id.rRating);
         myPhoto = (ImageView) findViewById(R.id.photo);
         //progress = ProgressDialog.show(this, "dialog title","dialog message", true);
@@ -214,6 +234,65 @@ public class ListingActivity extends BaseActivity{
                 //myFancyMethod(v);
                 Intent myIntent = new Intent(ListingActivity.this, ShowItemReviewsActivity.class);
                 myIntent.putExtra("ITEM_ID", rList.getItem());
+                ListingActivity.this.startActivity(myIntent);
+            }
+        });
+
+        startChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rental_id = UUID.randomUUID().toString();
+
+                Date msgDate = DateTime.now().toDate();
+                Chat defaultFirstMsg = new Chat();
+                defaultFirstMsg.setDate(msgDate);
+                defaultFirstMsg.setSender(myUser.getUid());
+                defaultFirstMsg.setReceiver(myItem.getUid());
+                defaultFirstMsg.setStatus(Chat.STATUS_SENDING);
+                String defaultMsg = "Hi " + myItem.getUid() + ","
+                                  + "I'm interested in renting your "
+                                  + myItem.getTitle() + ".";
+                defaultFirstMsg.setMsg(defaultMsg);
+
+                convo = new Conversation();
+                convo.setRenter(myUser.getUid());
+                convo.setOwner(myItem.getUid());
+                convo.setItem_id(myItem.getId());
+                convo.setItem_name(myItem.getTitle());
+                convo.setRental_id(rental_id);
+
+                convo.setLastMsgDate(msgDate);
+                ArrayList<Chat> chatMsgs = new ArrayList<Chat>();
+                chatMsgs.add(defaultFirstMsg);
+                convo.setChat(chatMsgs);
+
+
+
+                // TODO: Fill in "fill-in-rental-id" with the rental-id as appropriate
+                FirebaseDatabase.getInstance().getReference("conversations").child(convo.getRental_id())
+                        .setValue(convo)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                   @Override
+                                                   public void onComplete(@NonNull Task<Void> task) {
+                                                       if (task.isSuccessful()) {
+                                                           convo.getChat().get(0).setStatus(Chat.STATUS_SENT);
+                                                       } else {
+                                                           convo.getChat().get(0).setStatus(Chat.STATUS_FAILED);
+                                                       }
+                                                       FirebaseDatabase.getInstance()
+                                                               .getReference("conversations")
+                                                               .child(convo.getRental_id())
+                                                               .child("chat")
+                                                               //.setValue(convo);
+                                                               .child("0")
+                                                               .setValue(convo.getChat().get(0));
+
+                                                   }
+                                               }
+                        );
+
+                Intent myIntent = new Intent(ListingActivity.this, ChatActivity.class);
+                myIntent.putExtra(Config.EXTRA_DATA, convo);
                 ListingActivity.this.startActivity(myIntent);
             }
         });

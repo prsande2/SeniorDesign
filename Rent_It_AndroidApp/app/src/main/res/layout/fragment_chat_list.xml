@@ -10,7 +10,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="#00b863"
+        android:divider="#9E9E9E"
         android:dividerHeight="1dp"
         tools:listitem="@layout/chat_item" >
     </ListView>

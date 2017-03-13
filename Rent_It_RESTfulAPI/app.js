@@ -10,8 +10,9 @@ var mongoose = require('mongoose');
 
 app.use(bodyParser.json());
 
-Genre = require('./models/genre');
+Category = require('./models/category');
 Item = require('./models/item');
+Review = require('./models/review');
 
 //Connect to Mongoose
 var connection_options = {
@@ -24,21 +25,23 @@ mongoose.connect(process.env.MONGO_DB_URL,
 //mongoose.connect('mongodb://localhost/bookstore');
 var db = mongoose.connection;
 
-app.get('/', function(req,res){
+/*app.get('/', function(req,res){
 	res.send('Hello World! Please user /api/books or /api/genres');
-});
+});*/
 
-app.get('/api/genres',function(req,res){
+//get all
+app.get('/api/categories',function(req,res){
 	console.log("reached the server");
-	Genre.getGenres(function(err,genres){
+	Category.getCategories(function(err,categories){
 		if(err){
 			throw err;
 		}
-		res.json(genres);
+		res.json(categories);
 	});
 });
 
-app.post('/api/genres',function(req,res){
+
+/*app.post('/api/categories',function(req,res){
 	var genre = req.body;
 	Genre.addGenre(genre,function(err,genre){
 		if(err){
@@ -46,20 +49,20 @@ app.post('/api/genres',function(req,res){
 		}
 		res.json(genre);
 	});
-});
+});*/
 
-app.put('/api/genres/:_id',function(req,res){
+/*app.put('/api/categories/:_id',function(req,res){
 	var id = req.params._id;
-	var genre = req.body;
-	Genre.updateGenre(id, genre, {}, function(err,genre){
+	var category = req.body;
+	Category.updateCategory(id, category, {}, function(err,category){
 		if(err){
 			throw err;
 		}
-		res.json(genre);
+		res.json(category);
 	});
-});
+});*/
 
-app.delete('/api/genres/:_id',function(req,res){
+/*app.delete('/api/genres/:_id',function(req,res){
 	var id = req.params._id;
 	var genre = req.body;
 	Genre.removeGenre(id, function(err,genre){
@@ -68,7 +71,7 @@ app.delete('/api/genres/:_id',function(req,res){
 		}
 		res.json(genre);
 	});
-});
+});*/
 
 /*Item.find({}, function(err,items){
 	if (err) throw err;
@@ -87,14 +90,23 @@ app.get('/api/items',function(req,res){
 });
 //get item by id
 app.get('/api/items/:_id',function(req,res){
-	Item.getItemById(req.params._id,function(err,item){
+	Item.getItemById(req.params._id,function(err,items){
 		if(err){
 			throw err;
 		}
-		res.json(item);
+		res.json(items);
 	})
 });
-//get my items by uid
+//get item by category
+app.get('/api/items/category/:category',function(req,res){
+	Item.getItemsByCategoryId(req.params.category,function(err,items){
+		if(err){
+			throw err;
+		}
+		res.json(items);
+	})
+});
+//get one item by uid
 app.get('/api/items/user/:uid',function(req,res){
 	Item.getItemsByUid(req.params.uid,function(err,items){
 		if(err){
@@ -126,7 +138,7 @@ app.put('/api/books/:_id',function(req,res){
 });
 */
 //Delete Item
-app.delete('/api/items/:_id',function(req,res){
+/*app.delete('/api/items/:_id',function(req,res){
 	var id = req.params._id;
 	var item = req.body;
 	Item.removeItem(id, function(err,item){
@@ -135,6 +147,46 @@ app.delete('/api/items/:_id',function(req,res){
 		}
 		res.json(item);
 	});
+});*/
+
+//get all reviews
+app.get('/api/reviews',function(req,res){
+	console.log("reached the server");
+	Review.getReviews(function(err, reviews){
+		if(err){
+			throw err;
+		}
+		res.json(reviews);
+	});
+});
+
+//get latest review by item id
+app.get('/api/review/item/:item',function(req,res){
+	Review.getLatestReviewByItemId(req.params.item,function(err,review){
+		if(err){
+			throw err;
+		}
+		if(!review){
+			//(review == null) works too
+			console.log("review is null 1");
+			review =[];
+			console.log("review is now " + review);
+		}
+	
+		res.json(review);
+	})
+});
+
+//get review by item id
+app.get('/api/reviews/item/:item',function(req,res){
+	Review.getReviewsByItemId(req.params.item,function(err,reviews){
+		if(err){
+			throw err;
+		}
+
+			console.log("review is  " + reviews);
+		res.json(reviews);
+	})
 });
 
 app.listen(process.env.PORT_NO);

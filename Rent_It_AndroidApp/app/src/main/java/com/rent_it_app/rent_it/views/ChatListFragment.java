@@ -46,7 +46,7 @@ public class ChatListFragment extends Fragment {
 
     /** The Chat list. */
     //private ArrayList<ChatUser> uList;
-    private ArrayList<Conversation>cList;
+    private ArrayList<Conversation> cList;
 
     // Todo: delete once switch to use Conversation instead of ChatMessage class
     public static ChatUser user;
@@ -146,10 +146,6 @@ public class ChatListFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> arg0,
                                                 View arg1, int pos, long arg3) {
-                            /*startActivity(new Intent(getActivity(), ChatActivity.class)
-                                    .putExtra(Config.EXTRA_DATA, uList.get(pos)));*/
-                            /*startActivity(new Intent(getActivity(), ChatActivity.class)
-                                    .putExtra(Config.EXTRA_DATA, cList.get(pos)));*/
                             startActivity(new Intent(getActivity(), ChatActivity.class)
                                     .putExtra(Config.EXTRA_DATA, cList.get(pos)));
                         }

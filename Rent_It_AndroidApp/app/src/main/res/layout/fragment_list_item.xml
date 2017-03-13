@@ -141,8 +141,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:prompt="@string/category_prompt"/>
-            <!--android:entries="@array/category_array"-->
+            android:spinnerMode="dialog"/>
+            <!--android:prompt="@string/category_prompt"
+            android:entries="@array/category_array"
+            style="@android:style/Widget.Spinner"-->
 
 
         <!--Tags-->

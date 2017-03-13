@@ -117,7 +117,7 @@ public class HomeActivityEspressoTest {
         //Click List it
         onView(withId(R.id.list_button)).perform(ViewActions.scrollTo()).perform(click());
 
-        //check sucess toast message is displayed
+        //check Sucess toast message is displayed
         onView(withText("Sucessfully Created New Listing"))
                 .inRoot(withDecorView(not(is(mHomeActivityRule.getActivity().getWindow().getDecorView()))))
                 .check(matches(isDisplayed()));
